@@ -1,0 +1,97 @@
+/* Header */
+.header {
+  background: #1a1a1a;
+  padding: 12px 0;
+  z-index: 999;
+  top: 0;
+  position: sticky;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header .inner-logo a {
+  font-size: 26px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  padding-left: 20px;
+}
+
+.header .inner-logo a:hover {
+  opacity: 0.8;
+}
+/* End Header */
+
+/* Body */
+.body .sider {
+  width: 180px;
+  background: #252525;
+  color: #ffffff;
+  height: calc(100vh - 56px);
+  position: fixed;
+  top: 56px;
+  left: 0;
+  padding: 20px 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.body .main {
+  margin: 20px;
+  position: relative;
+  left: 180px;
+  width: calc(100% - 220px);
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+/* End Body */
+
+/* Sider */
+.sider .inner-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sider .inner-menu ul li a {
+  color: #ffffff;
+  display: block;
+  padding: 12px 20px; /* Điều chỉnh padding để chữ không sát lề */
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  border-radius: 4px;
+  margin: 5px 10px;
+}
+
+.sider .inner-menu ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sider .inner-menu ul li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+}
+
+/* Thêm padding-left cho phần tử chứa chữ "Admin" */
+.sider .admin-section {
+  padding-left: 20px; /* Điều chỉnh giá trị này theo nhu cầu */
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px; /* Thêm khoảng cách phía dưới */
+}
+
+.image-preview {
+  width: 150px;
+  height: auto;
+  margin-top: 15px;
+  border: 1xp solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+}
+.image-preview[src=""] {
+  display: none;
+}

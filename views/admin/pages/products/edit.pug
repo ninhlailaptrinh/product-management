@@ -1,0 +1,139 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-ok(5000)
+  +alert-err(5000)
+
+  h1(class="mb-4") Sửa sản phẩm
+
+  if product
+    form(
+      action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
+      id="form-edit-product"
+      method="POST"
+      enctype="multipart/form-data"
+    )
+      //- Tiêu đề
+      div(class="form-group")
+        label(for="title") Tiêu đề
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          required
+          value=product.title
+        )
+
+      //- Mô tả
+      div(class="form-group")
+        label(for="desc") Mô tả
+        textarea(
+          class="form-control"
+          id="desc"
+          name="description"
+          rows="5"
+        ) #{product.description}
+
+      //- Giá
+      div(class="form-group")
+        label(for="price") Giá
+        input(
+          type="number"
+          class="form-control"
+          id="price"
+          name="price"
+          value=product.price
+          min="0"
+        )
+
+      //- % Giảm giá
+      div(class="form-group")
+        label(for="discount") % Giảm giá
+        input(
+          type="number"
+          class="form-control"
+          id="discount"
+          name="discountPercentage"
+          value=product.discountPercentage
+          min="0"
+        )
+
+      //- Số lượng
+      div(class="form-group")
+        label(for="stock") Số lượng
+        input(
+          type="number"
+          class="form-control"
+          id="stock"
+          name="stock"
+          value=product.stock
+          min="0"
+        )
+
+      //- Ảnh
+      div(class="form-group" upload-image)
+        label(for="thumbnail") Ảnh
+        input(
+          type="file"
+          class="form-control-file"
+          id="thumbnail"
+          name="thumbnail"
+          accept="image/*"
+          upload-image-input
+        )
+        if product.thumbnail
+          img(
+            src=product.thumbnail
+            upload-image-preview
+            class="image-preview"
+            alt="Ảnh sản phẩm"
+            style="width: 150px; margin-top: 10px;"
+          )
+
+      //- Vị trí
+      div(class="form-group")
+        label(for="position") Vị trí
+        input(
+          type="number"
+          class="form-control"
+          id="position"
+          name="position"
+          value=product.position
+          min="1"
+        )
+
+      //- Trạng thái
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked=(product.status === "active")
+        )
+        label(for="statusActive" class="form-check-label") Hoạt động
+
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInactive"
+          name="status"
+          value="inactive"
+          checked=(product.status === "inactive")
+        )
+        label(for="statusInactive" class="form-check-label") Dừng hoạt động
+
+      //- Nút submit
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-primary"
+        ) Lưu lại
+  else
+    p Không có thông tin sản phẩm.
+
+  script(src="/admin/js/product.js")

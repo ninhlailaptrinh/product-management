@@ -1,0 +1,29 @@
+extends ../../layout/default.pug
+
+block main
+  .container.my-5
+    h1.mb-4 Chi tiết sản phẩm
+
+    if product
+      .card.shadow
+        .row.g-0
+          .col-md-4
+            img(src=product.thumbnail, alt=product.title, class="img-fluid rounded-start")
+          .col-md-8
+            .card-body
+              h2.card-title #{product.title}
+              p.card-text.text-muted #{product.description}
+              ul.list-group.list-group-flush
+                li.list-group-item
+                  strong Giá: 
+                  span.text-success #{product.price.toLocaleString()} VND
+                li.list-group-item
+                  strong Giảm giá: 
+                  span.text-danger #{product.discountPercentage}%
+                li.list-group-item
+                  strong Tồn kho: 
+                  span.text-primary #{product.stock}
+    else
+      .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
+
+  script(src="/client/js/script.js")
