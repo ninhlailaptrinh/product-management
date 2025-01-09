@@ -4,7 +4,7 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const { request } = require("express");
 const systemConfig = require("../../config/system");
-console.log(request);
+
 module.exports.index = async (req, res) => {
   // Lấy trạng thái lọc từ helper
   const filterStatus = filterStatusHelper(req.query);
@@ -145,11 +145,6 @@ module.exports.createPost = async (req, res) => {
       req.body.position = parseInt(req.body.position, 10);
     }
 
-    // Xử lý file upload (nếu có)
-    if (req.file) {
-      req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
-
     // Lưu sản phẩm vào database
     const product = new Product(req.body);
     await product.save();
@@ -167,8 +162,8 @@ module.exports.createPost = async (req, res) => {
 module.exports.edit = async (req, res) => {
   try {
     const find = {
-      deleted: "false",
-      _id: req.params.id, //id là duy nhất = 1
+      deleted: false,
+      _id: req.params.id,
     };
 
     const product = await Product.findOne(find);
