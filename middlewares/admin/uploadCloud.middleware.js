@@ -34,7 +34,7 @@ const uploadImage = async (req, res, next) => {
       // Lưu URL ảnh vào req.body
       req.body.thumbnail = result.secure_url;
 
-      // Chuyển sang middleware tiếp theo
+      // ok next  Chuyển sang middleware tiếp theo
       next();
     } catch (error) {
       console.error("Upload error:", error);
