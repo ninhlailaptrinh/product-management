@@ -1,4 +1,5 @@
 const express = require("express");
+var path = require("path");
 const routeAdmin = require("./routes/admin/index.route.js");
 const routeClient = require("./routes/client/index.route.js");
 const database = require("./config/database");
@@ -21,6 +22,11 @@ const port = process.env.PORT;
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
+
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce")),
+);
 
 //App local variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;

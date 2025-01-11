@@ -164,3 +164,30 @@ if (clearImagePreview) {
     uploadImagePreview.style.display = "none";
   });
 }
+
+const sort = document.querySelector("[sort]");
+if (sort) {
+  let url = new URL(window.location.href);
+  const sortSelect = document.querySelector("[sort-select]");
+  const sortClear = document.querySelector("[sort-clear]");
+
+  // Xử lý khi thay đổi lựa chọn sắp xếp
+  sortSelect.addEventListener("change", (e) => {
+    const value = e.target.value;
+    const [sortKey, sortValue] = value.split("-");
+
+    url.searchParams.set("sortKey", sortKey);
+    url.searchParams.set("sortValue", sortValue);
+
+    location.href = url.href;
+  });
+  const sortKey = url.searchParams.get("sortKey");
+  const sortValue = url.searchParams.get("sortValue");
+  if (sortKey && sortValue) {
+    const stringSort = `${sortKey}-${sortValue}`;
+    const optionSelected = sortSelect.querySelector(
+      `option[value="${stringSort}"]`,
+    );
+    optionSelected.selected = true;
+  }
+}

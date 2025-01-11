@@ -39,9 +39,17 @@ module.exports.index = async (req, res) => {
     countProducts,
   );
 
+  let sort = {};
+
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = "desc";
+  } else {
+    sort.position = "desc";
+  }
+
   // Lấy danh sách sản phẩm với điều kiện tìm kiếm và phân trang
   const products = await Product.find(find)
-    .sort({ position: "desc" }) // Sắp xếp theo thứ tự tăng dần
+    .sort({ price: "desc" }) // Sắp xếp theo thứ tự tăng dần
     .skip(objectPagination.skip) // Bỏ qua các sản phẩm trước đó
     .limit(objectPagination.limitItem); // Giới hạn số sản phẩm trên mỗi trang
 
