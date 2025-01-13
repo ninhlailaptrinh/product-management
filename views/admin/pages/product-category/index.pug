@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug
+
+block main
+  h1 Danh mục sản phẩm
+
+  .card.mb-3
+    .card-header Danh sách sản phẩm
+    .card-body
+      .row
+        .col-8
+        .col-4
+          a(
+            href=`${prefixAdmin}/product-category/create`
+            class="btn btn-outline-success"
+          ) + Thêm sản phẩm
