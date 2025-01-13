@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/admin/product-category.controller");
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 const multer = require("multer");
 const upload = multer();
-const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
-const validate = require("../../validate/admin/product-category/product-category.validate");
+const validate = require("../../validate/admin/product/product-category.validate");
 
+// Định nghĩa routes
 router.get("/", controller.index);
 
 router.get("/create", controller.create);

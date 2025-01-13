@@ -174,7 +174,7 @@ if (sort) {
   // Xử lý khi thay đổi lựa chọn sắp xếp
   sortSelect.addEventListener("change", (e) => {
     const value = e.target.value;
-    if(value) {
+    if (value) {
       const [sortKey, sortValue] = value.split("-");
       url.searchParams.set("sortKey", sortKey);
       url.searchParams.set("sortValue", sortValue);
@@ -195,9 +195,9 @@ if (sort) {
   if (sortKey && sortValue) {
     const stringSort = `${sortKey}-${sortValue}`;
     const optionSelected = sortSelect.querySelector(
-      `option[value="${stringSort}"]`
+      `option[value="${stringSort}"]`,
     );
-    if(optionSelected) {
+    if (optionSelected) {
       optionSelected.selected = true;
     }
   }

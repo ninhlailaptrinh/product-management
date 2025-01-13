@@ -1,38 +1,38 @@
 const ProductCategory = require("../../models/product-category.model");
+// const filterStatusHelper = require("../../helpers/filterStatus");
+// const searchHelper = require("../../helpers/search");
 const systemConfig = require("../../config/system");
 
-// Tách thành các module riêng
 module.exports.index = async (req, res) => {
-  const find = {
+  let find = {
     deleted: false,
   };
-
-  const productCategories = await ProductCategory.find(find);
+  const products = await ProductCategory.find(find);
 
   res.render("admin/pages/product-category/index", {
     pageTitle: "Danh mục sản phẩm",
-    productCategory: productCategories,
+    products: products,
   });
 };
 
 module.exports.create = async (req, res) => {
   res.render("admin/pages/product-category/create", {
-    pageTitle: "Tạo danh mục sản phẩm",
+    pageTitle: "Tạo mục sản phẩm",
   });
 };
 
+// Xử lý tạo sản phẩm
 module.exports.createPost = async (req, res) => {
-  const formData = { ...req.body };
-
-  if (formData.position === "") {
-    const countProductCategory = await ProductCategory.countDocuments();
-    formData.position = countProductCategory + 1;
+  if (req.body.position == "") {
+    const countProducts = await ProductCategory.countDocuments();
+    req.body.position = countProducts + 1;
   } else {
-    formData.position = parseInt(formData.position);
+    req.body.position = parseInt(req.body.position, 10);
   }
 
-  const productCategory = new ProductCategory(formData);
-  await productCategory.save();
+  const product = new ProductCategory(req.body);
+  await product.save();
+  console.log(req.body);
 
   res.redirect(`${systemConfig.prefixAdmin}/product-category`);
 };

@@ -1,3 +1,93 @@
 extends ../../layouts/default.pug
+
 block main
-  h1 Trang tổng quan
+
+  .container-fluid
+    .row
+      .col-12
+        h1.mb-4 Trang tổng quan
+
+    //- Thống kê nhanh
+    .row.mb-4
+      .col-md-3
+        .card.shadow-sm.bg-primary.text-white
+          .card-body
+            h5.card-title Tổng sản phẩm
+            p.card-text.display-4 1,234
+      .col-md-3
+        .card.shadow-sm.bg-success.text-white
+          .card-body
+            h5.card-title Tổng đơn hàng
+            p.card-text.display-4 567
+      .col-md-3
+        .card.shadow-sm.bg-warning.text-white
+          .card-body
+            h5.card-title Đơn hàng chờ xử lý
+            p.card-text.display-4 89
+      .col-md-3
+        .card.shadow-sm.bg-danger.text-white
+          .card-body
+            h5.card-title Đơn hàng hủy
+            p.card-text.display-4 12
+
+    //- Card chức năng
+    .row.mb-4
+      .col-md-4.mb-3
+        .card.shadow-sm
+          .card-body
+            h5.card-title Quản lý sản phẩm
+            p.card-text.text-muted Thêm, sửa, xóa và quản lý sản phẩm.
+            a(href=`${prefixAdmin}/products` class="btn btn-primary") Xem chi tiết
+      .col-md-4.mb-3
+        .card.shadow-sm
+          .card-body
+            h5.card-title Quản lý danh mục
+            p.card-text.text-muted Quản lý các danh mục sản phẩm.
+            a(href=`${prefixAdmin}/product-category` class="btn btn-success") Xem chi tiết
+      .col-md-4.mb-3
+        .card.shadow-sm
+          .card-body
+            h5.card-title Quản lý đơn hàng
+            p.card-text.text-muted Theo dõi và xử lý đơn hàng.
+            a(href=`${prefixAdmin}/orders` class="btn btn-warning") Xem chi tiết
+
+    //- Bảng dữ liệu đơn hàng mới nhất
+    .row
+      .col-12
+        .card.shadow-sm
+          .card-header.bg-light
+            h5.mb-0 Đơn hàng mới nhất
+          .card-body
+            table.table.table-hover
+              thead
+                tr
+                  th Mã đơn hàng
+                  th Khách hàng
+                  th Tổng tiền
+                  th Trạng thái
+                  th Ngày tạo
+              tbody
+                tr
+                  td #12345
+                  td Nguyễn Văn A
+                  td 1,000,000đ
+                  td
+                    span.badge.bg-success Đã hoàn thành
+                  td 12/10/2023
+                tr
+                  td #12346
+                  td Trần Thị B
+                  td 2,500,000đ
+                  td
+                    span.badge.bg-warning Đang xử lý
+                  td 11/10/2023
+                tr
+                  td #12347
+                  td Lê Văn C
+                  td 500,000đ
+                  td
+                    span.badge.bg-danger Đã hủy
+                  td 10/10/2023
+
+  //- Link đến file CSS riêng cho trang dashboard
+  link(rel="stylesheet", href="/css/dashboard.css")
