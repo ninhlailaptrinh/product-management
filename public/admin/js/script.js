@@ -174,20 +174,31 @@ if (sort) {
   // Xử lý khi thay đổi lựa chọn sắp xếp
   sortSelect.addEventListener("change", (e) => {
     const value = e.target.value;
-    const [sortKey, sortValue] = value.split("-");
+    if(value) {
+      const [sortKey, sortValue] = value.split("-");
+      url.searchParams.set("sortKey", sortKey);
+      url.searchParams.set("sortValue", sortValue);
+      location.href = url.href;
+    }
+  });
 
-    url.searchParams.set("sortKey", sortKey);
-    url.searchParams.set("sortValue", sortValue);
-
+  // Xử lý nút Clear
+  sortClear.addEventListener("click", () => {
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
     location.href = url.href;
   });
+
+  // Khôi phục trạng thái đã chọn
   const sortKey = url.searchParams.get("sortKey");
   const sortValue = url.searchParams.get("sortValue");
   if (sortKey && sortValue) {
     const stringSort = `${sortKey}-${sortValue}`;
     const optionSelected = sortSelect.querySelector(
-      `option[value="${stringSort}"]`,
+      `option[value="${stringSort}"]`
     );
-    optionSelected.selected = true;
+    if(optionSelected) {
+      optionSelected.selected = true;
+    }
   }
 }
