@@ -9,7 +9,7 @@ block main
 
   if product
     form#form-edit-product(
-      action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`,
+      action=`${prefixAdmin}/product-category/edit/${product._id}?_method=PATCH`,
       method="POST",
       enctype="multipart/form-data"
     )
@@ -27,36 +27,6 @@ block main
       .form-group
         label(for="desc") Mô tả
         textarea#desc.form-control(name="description", rows="5") #{ product.description }
-
-      //- Giá
-      .form-group
-        label(for="price") Giá
-        input#price.form-control(
-          type="number",
-          name="price",
-          value=product.price,
-          min="0"
-        )
-
-      //- % Giảm giá
-      .form-group
-        label(for="discount") % Giảm giá
-        input#discount.form-control(
-          type="number",
-          name="discountPercentage",
-          value=product.discountPercentage,
-          min="0"
-        )
-
-      //- Số lượng
-      .form-group
-        label(for="stock") Số lượng
-        input#stock.form-control(
-          type="number",
-          name="stock",
-          value=product.stock,
-          min="0"
-        )
 
       //- Ảnh
       .form-group(upload-image)

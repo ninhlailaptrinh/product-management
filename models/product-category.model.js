@@ -26,8 +26,8 @@ const productCategorySchema = new mongoose.Schema(
   },
 );
 
-// Tạo index cho trường slug
-productCategorySchema.index({ slug: 1 }, { unique: true });
+// // Tạo index cho trường slug
+// productCategorySchema.index({ slug: 1 }, { unique: true });
 
 const ProductCategory = mongoose.model(
   "ProductCategory", // Tên model

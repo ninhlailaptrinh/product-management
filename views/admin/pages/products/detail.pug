@@ -8,53 +8,58 @@ block main
       .card
         .row.g-0
           .col-md-4
-            img(src=product.thumbnail, alt=product.title, class="img-fluid rounded-start")
+            img.img-fluid.rounded-start(
+              src=product.thumbnail,
+              alt=product.title
+            )
           .col-md-8
             .card-body
-              h2.card-title #{product.title}
-              p.card-text.text-muted #{product.description}
+              h2.card-title #{ product.title }
+              p.card-text.text-muted #{ product.description }
               ul.list-group.list-group-flush
                 li.list-group-item
-                  strong Giá: 
-                  span #{product.price.toLocaleString()} VND
+                  strong Giá:
+                  span #{ product.price.toLocaleString() } VND
                 li.list-group-item
-                  strong Giảm giá: 
-                  span #{product.discountPercentage}%
+                  strong Giảm giá:
+                  span #{ product.discountPercentage }%
                 li.list-group-item
-                  strong Tồn kho: 
-                  span #{product.stock}
+                  strong Tồn kho:
+                  span #{ product.stock }
                 li.list-group-item
-                  strong Trạng thái: 
-                  span.badge(class=product.status === "active" ? "bg-success" : "bg-secondary") #{product.status}
+                  strong Trạng thái:
+                  span.badge(
+                    class=product.status === "active" ? "bg-success" : "bg-secondary"
+                  ) #{ product.status }
                 li.list-group-item
-                  strong Vị trí: 
-                  span #{product.position}
+                  strong Vị trí:
+                  span #{ product.position }
                 li.list-group-item
-                  strong Đã xóa: 
-                  span.badge(class=product.deleted ? "bg-danger" : "bg-success") #{product.deleted ? "Có" : "Không"}
+                  strong Đã xóa:
+                  span.badge(class=product.deleted ? "bg-danger" : "bg-success") #{ product.deleted ? "Có" : "Không" }
                 if product.deleted
                   li.list-group-item
-                    strong Ngày xóa: 
-                    span #{product.deletedAt.toLocaleDateString()}
+                    strong Ngày xóa:
+                    span #{ product.deletedAt.toLocaleDateString() }
               //- Nút chỉnh sửa và xóa sản phẩm
               .mt-3
-                a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning btn-sm mr-2") Sửa
-                a(
-                  href="#"
-                  class="btn btn-danger btn-sm"
-                  data-id=product.id
+                a.btn.btn-warning.btn-sm.mr-2(
+                  href=`${prefixAdmin}/products/edit/${product.id}`
+                ) Sửa
+                a.btn.btn-danger.btn-sm(
+                  href="#",
+                  data-id=product.id,
                   button-delete
                 ) Xóa
     else
       .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
 
   //- Form ẩn để xử lý xóa
-  form(
-    id="form-delete-status"
-    method="POST"
-    action=""
-    data-path="/admin/products/delete"
-    style="display: none;"
+  form#form-delete-status(
+    method="POST",
+    action="",
+    data-path="/admin/products/delete",
+    style="display: none"
   )
 
   script(src="/admin/js/product.js")

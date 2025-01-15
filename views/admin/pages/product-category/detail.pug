@@ -1,0 +1,55 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-5
+    h1.mb-4 Chi tiết danh mục
+
+    if products
+      .card
+        .row.g-0
+          .col-md-4
+            img.img-fluid.rounded-start(
+              src=products.thumbnail,
+              alt=products.title
+            )
+          .col-md-8
+            .card-body
+              h2.card-title #{ products.title }
+              p.card-text.text-muted #{ products.description }
+              ul.list-group.list-group-flush
+                li.list-group-item
+                  strong Trạng thái:
+                  span.badge(
+                    class=products.status === "active" ? "bg-success" : "bg-secondary"
+                  ) #{ products.status }
+                li.list-group-item
+                  strong Vị trí:
+                  span #{ products.position }
+                li.list-group-item
+                  strong Đã xóa:
+                  span.badge(class=products.deleted ? "bg-danger" : "bg-success") #{ products.deleted ? "Có" : "Không" }
+                if products.deleted
+                  li.list-group-item
+                    strong Ngày xóa:
+                    span #{ products.deletedAt.toLocaleDateString() }
+              .mt-3
+                a.btn.btn-warning.btn-sm.mr-2(
+                  href=`${prefixAdmin}/product-category/edit/${products.id}`
+                ) Sửa
+                a.btn.btn-danger.btn-sm(
+                  href="#",
+                  data-id=products.id,
+                  button-delete
+                ) Xóa
+    else
+      .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
+
+  //- Form ẩn để xử lý xóa
+  form#form-delete-status(
+    method="POST",
+    action="",
+    data-path="/admin/product-category/delete",
+    style="display: none"
+  )
+
+  script(src="/admin/js/product.js")

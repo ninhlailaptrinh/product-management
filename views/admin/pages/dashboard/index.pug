@@ -1,7 +1,6 @@
 extends ../../layouts/default.pug
 
 block main
-
   .container-fluid
     .row
       .col-12
@@ -37,19 +36,19 @@ block main
           .card-body
             h5.card-title Quản lý sản phẩm
             p.card-text.text-muted Thêm, sửa, xóa và quản lý sản phẩm.
-            a(href=`${prefixAdmin}/products` class="btn btn-primary") Xem chi tiết
+            a.btn.btn-primary(href=`${prefixAdmin}/products`) Xem chi tiết
       .col-md-4.mb-3
         .card.shadow-sm
           .card-body
             h5.card-title Quản lý danh mục
             p.card-text.text-muted Quản lý các danh mục sản phẩm.
-            a(href=`${prefixAdmin}/product-category` class="btn btn-success") Xem chi tiết
+            a.btn.btn-success(href=`${prefixAdmin}/product-category`) Xem chi tiết
       .col-md-4.mb-3
         .card.shadow-sm
           .card-body
             h5.card-title Quản lý đơn hàng
             p.card-text.text-muted Theo dõi và xử lý đơn hàng.
-            a(href=`${prefixAdmin}/orders` class="btn btn-warning") Xem chi tiết
+            a.btn.btn-warning(href=`${prefixAdmin}/orders`) Xem chi tiết
 
     //- Bảng dữ liệu đơn hàng mới nhất
     .row

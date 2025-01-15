@@ -15,10 +15,7 @@ block main
   .card.mb-4.shadow-sm
     .card-header.bg-gradient-primary.text-white.d-flex.justify-content-between.align-items-center
       span Bộ lọc và tìm kiếm
-      a(
-        href=`${prefixAdmin}/products/create`
-        class="btn btn-light btn-sm"
-      )
+      a.btn.btn-light.btn-sm(href=`${prefixAdmin}/products/create`)
         i.fas.fa-plus.mr-2
         | Thêm sản phẩm
 
@@ -34,7 +31,7 @@ block main
     .card-header.bg-gradient-primary.text-white Sắp xếp
     .card-body
       .row
-        +sort()
+        +sort
 
   //- Danh sách sản phẩm
   .card.mb-4.shadow-sm
@@ -44,10 +41,7 @@ block main
         .col-md-8.mb-3
           +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
         .col-md-4.text-right
-          a(
-            href=`${prefixAdmin}/products/create`
-            class="btn btn-success btn-sm"
-          )
+          a.btn.btn-success.btn-sm(href=`${prefixAdmin}/products/create`)
             i.fas.fa-plus.mr-2
             | Thêm sản phẩm
 
@@ -56,7 +50,7 @@ block main
           thead
             tr
               th
-                input(type="checkbox" name="checkall")
+                input(type="checkbox", name="checkall")
               th STT
               th Hình ảnh
               th Tiêu đề
@@ -69,59 +63,49 @@ block main
             each item, index in products
               tr
                 td
-                  input(type="checkbox" name="id" value=item.id)
-                td #{index + 1}
+                  input(type="checkbox", name="id", value=item.id)
+                td #{ index + 1 }
                 td
                   .product-image-container
-                    img(
-                      src=item.thumbnail
-                      alt=item.title
-                      class="product-image"
-                    )
-                td #{item.title}
-                td #{item.price}$
+                    img.product-image(src=item.thumbnail, alt=item.title)
+                td #{ item.title }
+                td #{ item.price }$
                 td
-                  input(
-                    type="number"
-                    name="position"
-                    value=item.position
-                    style="width: 60px;"
+                  input.form-control.form-control-sm(
+                    type="number",
+                    name="position",
+                    value=item.position,
+                    style="width: 60px",
                     min="1"
-                    class="form-control form-control-sm"
                   )
                 td
                   if item.status === "active"
-                    button(
-                      button-change-status
-                      class="badge badge-success p-2"
-                      data-status="active"
+                    button.badge.badge-success.p-2(
+                      button-change-status,
+                      data-status="active",
                       data-id=item.id
                     ) Hoạt động
                   else
-                    button(
-                      button-change-status
-                      class="badge badge-danger p-2"
-                      data-status="inactive"
+                    button.badge.badge-danger.p-2(
+                      button-change-status,
+                      data-status="inactive",
                       data-id=item.id
                     ) Dừng hoạt động
                 td.text-right
                   .btn-group
-                    a(
-                      href=`${prefixAdmin}/products/detail/${item.id}`
-                      class="btn btn-info btn-sm mr-1"
+                    a.btn.btn-info.btn-sm.mr-1(
+                      href=`${prefixAdmin}/products/detail/${item.id}`,
                       title="Chi tiết"
                     )
                       i.fas.fa-eye
-                    a(
-                      href=`${prefixAdmin}/products/edit/${item.id}`
-                      class="btn btn-warning btn-sm mr-1"
+                    a.btn.btn-warning.btn-sm.mr-1(
+                      href=`${prefixAdmin}/products/edit/${item.id}`,
                       title="Sửa"
                     )
                       i.fas.fa-edit
-                    button(
-                      class="btn btn-danger btn-sm"
-                      data-id=item.id
-                      button-delete
+                    button.btn.btn-danger.btn-sm(
+                      data-id=item.id,
+                      button-delete,
                       title="Xóa"
                     )
                       i.fas.fa-trash
@@ -130,25 +114,23 @@ block main
   +pagination(pagination)
 
   //- Form ẩn để thay đổi trạng thái và xóa
-  form(
-    action=""
-    method="POST"
-    id="form-change-status"
-    data-path=`${prefixAdmin}/products/change-status`
-    style="display: none;"
+  form#form-change-status(
+    action="",
+    method="POST",
+    data-path=`${prefixAdmin}/products/change-status`,
+    style="display: none"
   )
-    input(type="hidden" name="status" id="input-status")
-    input(type="hidden" name="id" id="input-id")
+    input#input-status(type="hidden", name="status")
+    input#input-id(type="hidden", name="id")
 
-  form(
-    action=""
-    method="POST"
-    id="form-delete-status"
-    data-path=`${prefixAdmin}/products/delete`
-    style="display: none;"
+  form#form-delete-status(
+    action="",
+    method="POST",
+    data-path=`${prefixAdmin}/products/delete`,
+    style="display: none"
   )
-    input(type="hidden" name="status" id="input-status")
-    input(type="hidden" name="id" id="input-id")
+    input#input-status(type="hidden", name="status")
+    input#input-id(type="hidden", name="id")
 
   //- Script xử lý sản phẩm
   script(src="/admin/js/product.js")

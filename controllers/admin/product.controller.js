@@ -1,9 +1,9 @@
-const Product = require("../../models/product.model");
-const filterStatusHelper = require("../../helpers/filterStatus");
-const searchHelper = require("../../helpers/search");
-const paginationHelper = require("../../helpers/pagination");
-const { request } = require("express");
-const systemConfig = require("../../config/system");
+const Product = require('../../models/product.model');
+const filterStatusHelper = require('../../helpers/filterStatus');
+const searchHelper = require('../../helpers/search');
+const paginationHelper = require('../../helpers/pagination');
+// const { request } = require("express");
+const systemConfig = require('../../config/system');
 
 module.exports.index = async (req, res) => {
   // Lấy trạng thái lọc từ helper
@@ -42,26 +42,26 @@ module.exports.index = async (req, res) => {
   let sort = {};
 
   if (req.query.sortKey && req.query.sortValue) {
-    sort[req.query.sortKey] = "desc";
+    sort[req.query.sortKey] = 'desc';
   } else {
-    sort.position = "desc";
+    sort.position = 'desc';
   }
 
   // Lấy danh sách sản phẩm với điều kiện tìm kiếm và phân trang
   const products = await Product.find(find)
-    .sort({ price: "desc" }) // Sắp xếp theo thứ tự tăng dần
+    .sort({ price: 'desc' }) // Sắp xếp theo thứ tự tăng dần
     .skip(objectPagination.skip) // Bỏ qua các sản phẩm trước đó
     .limit(objectPagination.limitItem); // Giới hạn số sản phẩm trên mỗi trang
 
   // Render trang và truyền dữ liệu
-  res.render("admin/pages/products/index", {
-    pageTitle: "Danh sách sản phẩm", // Tiêu đề trang
+  res.render('admin/pages/products/index', {
+    pageTitle: 'Danh sách sản phẩm', // Tiêu đề trang
     products: products, // Danh sách sản phẩm
     filterStatus: filterStatus, // Trạng thái lọc
     keyword: objectSearch.keyword, // Từ khóa tìm kiếm
     pagination: objectPagination, // Thông tin phân trang
-    message: req.flash("success"),
-    messages: req.flash("error"),
+    message: req.flash('success'),
+    messages: req.flash('error'),
   });
 };
 
@@ -73,48 +73,45 @@ module.exports.changeStatus = async (req, res) => {
 
     await Product.updateOne({ _id: id }, { status: status });
 
-    req.flash("success", "Cập nhật trạng thái thành công!");
-    res.redirect(req.get("Referrer") || "/");
+    req.flash('success', 'Cập nhật trạng thái thành công!');
+    res.redirect(req.get('Referrer') || '/');
   } catch (error) {
-    req.flash("error", "Cập nhật trạng thái thất bại!", error);
-    res.redirect(req.get("Referrer") || "/");
+    req.flash('error', 'Cập nhật trạng thái thất bại!', error);
+    res.redirect(req.get('Referrer') || '/');
   }
 };
 
 // Router change-Multi
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
-  const ids = req.body.ids.split(", ");
+  const ids = req.body.ids.split(', ');
 
   switch (type) {
-    case "active":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
-      req.flash("success", "Cập nhật trạng thái thành công");
+    case 'active':
+      await Product.updateMany({ _id: { $in: ids } }, { status: 'active' });
+      req.flash('success', 'Cập nhật trạng thái thành công');
       break;
-    case "inactive":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
-      req.flash("success", "Cập nhật trạng thái thành công");
+    case 'inactive':
+      await Product.updateMany({ _id: { $in: ids } }, { status: 'inactive' });
+      req.flash('success', 'Cập nhật trạng thái thành công');
       break;
 
-    case "delete-all":
-      await Product.updateMany(
-        { _id: { $in: ids } },
-        { deleted: true, deleteAt: new Date() },
-      );
-      req.flash("success", "Xóa sản phẩm thành công");
+    case 'delete-all':
+      await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deleteAt: new Date() });
+      req.flash('success', 'Xóa sản phẩm thành công');
       break;
-    case "change-position":
+    case 'change-position':
       for (const item of ids) {
-        let [id, position] = item.split("-");
+        let [id, position] = item.split('-');
         position = parseInt(position);
         await Product.updateOne({ _id: id }, { position: position });
       }
-      req.flash("success", "Cập nhật vị trí thành công");
+      req.flash('success', 'Cập nhật vị trí thành công');
       break;
     default:
       break;
   }
-  res.redirect(req.get("Referrer") || "/");
+  res.redirect(req.get('Referrer') || '/');
 };
 
 // Delete item
@@ -124,14 +121,14 @@ module.exports.deleteItem = async (req, res) => {
   // await Product.deleteOne({ _id: id });
   // xóa mềm
   await Product.updateOne({ _id: id }, { deleted: true, deleteAt: new Date() });
-  req.flash("success", "Xóa sản phẩm thành công");
-  res.redirect(req.get("Referrer") || "/");
+  req.flash('success', 'Xóa sản phẩm thành công');
+  res.redirect(req.get('Referrer') || '/');
 };
 
 // Hiển thị form tạo sản phẩm
 module.exports.createItem = async (req, res) => {
-  res.render("admin/pages/products/create", {
-    pageTitle: "Thêm sản phẩm",
+  res.render('admin/pages/products/create', {
+    pageTitle: 'Thêm sản phẩm',
   });
 };
 
@@ -146,7 +143,7 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage, 10);
 
     // Xác định vị trí (position)
-    if (req.body.position == "") {
+    if (req.body.position == '') {
       const countProducts = await Product.countDocuments();
       req.body.position = countProducts + 1;
     } else {
@@ -158,12 +155,12 @@ module.exports.createPost = async (req, res) => {
     await product.save();
 
     // Thông báo thành công
-    req.flash("success", "Thêm sản phẩm thành công!");
-    res.redirect(req.get("Referrer") || `${systemConfig.prefixAdmin}/products`);
+    req.flash('success', 'Thêm sản phẩm thành công!');
+    res.redirect(req.get('Referrer') || `${systemConfig.prefixAdmin}/products`);
   } catch (error) {
     console.error(error);
-    req.flash("error", "Lỗi server: Không thể thêm sản phẩm!");
-    res.status(500).redirect(req.get("Referrer") || "/");
+    req.flash('error', 'Lỗi server: Không thể thêm sản phẩm!');
+    res.status(500).redirect(req.get('Referrer') || '/');
   }
 };
 
@@ -176,8 +173,8 @@ module.exports.edit = async (req, res) => {
 
     const product = await Product.findOne(find);
 
-    res.render("admin/pages/products/edit", {
-      pageTitle: "Thêm sản phẩm",
+    res.render('admin/pages/products/edit', {
+      pageTitle: 'Thêm sản phẩm',
       product: product,
     });
   } catch (error) {
@@ -191,8 +188,8 @@ module.exports.editPatch = async (req, res) => {
 
     // Kiểm tra tên sản phẩm
     if (!req.body.title || req.body.title.length < 5) {
-      req.flash("error", "Tên sản phẩm phải có ít nhất 5 ký tự!");
-      return res.redirect(req.get("Referrer") || "/");
+      req.flash('error', 'Tên sản phẩm phải có ít nhất 5 ký tự!');
+      return res.redirect(req.get('Referrer') || '/');
     }
 
     // Chuyển đổi các trường số
@@ -213,11 +210,11 @@ module.exports.editPatch = async (req, res) => {
     );
 
     // Thông báo thành công và chuyển hướng
-    req.flash("success", "Sửa sản phẩm thành công!");
+    req.flash('success', 'Sửa sản phẩm thành công!');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
   } catch (error) {
-    req.flash("error", "Lỗi không thể sửa sản phẩm!", error);
-    res.status(500).redirect(req.get("Referrer") || "/");
+    req.flash('error', 'Lỗi không thể sửa sản phẩm!', error);
+    res.status(500).redirect(req.get('Referrer') || '/');
   }
 };
 
@@ -225,14 +222,14 @@ module.exports.editPatch = async (req, res) => {
 module.exports.detail = async (req, res) => {
   try {
     const find = {
-      deleted: "false",
+      deleted: false,
       _id: req.params.id,
     };
 
     const product = await Product.findOne(find);
 
-    res.render("admin/pages/products/detail", {
-      pageTitle: "Thông tin sản phẩm",
+    res.render('admin/pages/products/detail', {
+      pageTitle: 'Thông tin sản phẩm',
       product: product,
     });
     console.log(find);

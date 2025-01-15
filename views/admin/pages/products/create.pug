@@ -4,121 +4,79 @@ include ../../mixins/alert.pug
 block main
   +alert-err(5000) 
 
-  h1(class="mb-4") Thêm sản phẩm
+  h1.mb-4 Thêm sản phẩm
 
-
-  form(
-    action=`${prefixAdmin}/products/create`
-    id="form-create-product"
-    method="POST"
+  form#form-create-product(
+    action=`${prefixAdmin}/products/create`,
+    method="POST",
     enctype="multipart/form-data"
   )
-    div(class="form-group")
+    .form-group
       label(for="title") Tiêu đề
-      input(
-        type="text"
-        class="form-control textarea-mce"
-        id="title"
-        name="title"
+      input#title.form-control.textarea-mce(
+        type="text",
+        name="title",
         required
       )
 
-    div(class="form-group")
+    .form-group
       label(for="desc") Mô tả
-      textarea(
-        class="form-control textarea-mce"
-        id="desc"
-        name="description"
-        rows="5"
-      )
+      textarea#desc.form-control.textarea-mce(name="description", rows="5")
 
-    div(class="form-group")
+    .form-group
       label(for="price") Giá
-      input(
-        type="number"
-        class="form-control"
-        id="price"
-        name="price"
-        value="0"
-        min="0"
-      )
+      input#price.form-control(type="number", name="price", value="0", min="0")
 
-    div(class="form-group")
+    .form-group
       label(for="discount") % Giảm giá
-      input(
-        type="number"
-        class="form-control"
-        id="discount"
-        name="discountPercentage"
-        value="0"
+      input#discount.form-control(
+        type="number",
+        name="discountPercentage",
+        value="0",
         min="0"
       )
 
-    div(class="form-group")
+    .form-group
       label(for="stock") Số lượng
-      input(
-        type="number"
-        class="form-control"
-        id="stock"
-        name="stock"
-        value="0"
-        min="0"
-      )
+      input#stock.form-control(type="number", name="stock", value="0", min="0")
 
-    div(class="form-group"
-      upload-image
-    )
+    .form-group(upload-image)
       label(for="thumbnail") Ảnh
-      input(
-        type="file"
-        class="form-control-file"
-        id="thumbnail"
-        name="thumbnail"
-        accept="image/*"
+      input#thumbnail.form-control-file(
+        type="file",
+        name="thumbnail",
+        accept="image/*",
         upload-image-input
       )
-      image(
-        src=""
-        upload-image-preview
-        class="image-preview"
-      ) 
+      image.image-preview(src="", upload-image-preview) 
 
-    div(class="form-group")
+    .form-group
       label(for="position") Vị trí
-      input(
-        type="number"
-        class="form-control"
-        id="position"
-        name="position"
-        placeholder="Tự động tăng"
+      input#position.form-control(
+        type="number",
+        name="position",
+        placeholder="Tự động tăng",
         min="1"
       )
 
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="active"
+    .form-group.form-check.form-check-inline
+      input#statusActive.form-check-input(
+        type="radio",
+        name="status",
+        value="active",
         checked
       )
-      label(for="isHot" class="form-check-label") Hoạt động  
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="inactive"
+      label.form-check-label(for="isHot") Hoạt động
+    .form-group.form-check.form-check-inline
+      input#statusActive.form-check-input(
+        type="radio",
+        name="status",
+        value="inactive",
         checked
       )
-      label(for="isHot" class="form-check-label") Dừng hoạt động
+      label.form-check-label(for="isHot") Dừng hoạt động
 
-    div(class="form-group")
-      button(
-        type="submit"
-        class="btn btn-primary"
-      ) Thêm sản phẩm
+    .form-group
+      button.btn.btn-primary(type="submit") Thêm sản phẩm
 
   script(src="/admin/js/product.js")
