@@ -5,7 +5,7 @@ block main
   +alert-ok(5000)
   +alert-err(5000)
 
-  h1.mb-4 Sửa sản phẩm
+  h1.mb-4 Sửa danh mục
 
   if product
     form#form-edit-product(
@@ -41,7 +41,7 @@ block main
           img.image-preview(
             src=product.thumbnail,
             upload-image-preview,
-            alt="Ảnh sản phẩm",
+            alt="Ảnh danh mục",
             style="width: 150px; margin-top: 10px"
           )
 
@@ -78,6 +78,6 @@ block main
       .form-group
         button.btn.btn-primary(type="submit") Lưu lại
   else
-    p Không có thông tin sản phẩm.
+    p Không có thông tin danh mục
 
   script(src="/admin/js/product.js")

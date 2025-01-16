@@ -232,7 +232,6 @@ module.exports.detail = async (req, res) => {
       pageTitle: 'Thông tin sản phẩm',
       product: product,
     });
-    console.log(find);
   } catch (error) {
     res.redirect(`${systemConfig.prefixAdmin}/products`, error);
   }

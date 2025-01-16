@@ -2,6 +2,7 @@ const ProductCategory = require('../../models/product-category.model');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const systemConfig = require('../../config/system');
+const createTree = require('../../helpers/treeHelper');
 
 module.exports.index = async (req, res) => {
   let find = {
@@ -19,58 +20,27 @@ module.exports.index = async (req, res) => {
     find.title = objectSearch.regex;
   }
 
-  function createTree(arr, parentId = '') {
-    const tree = [];
-    arr.forEach((item) => {
-      if (item.parent_id === parentId) {
-        const newItem = item;
-        const children = createTree(arr, item.id); // Đệ quy tìm các con
-        if (children.length > 0) {
-          newItem.children = children;
-        }
-        tree.push(newItem);
-      }
-    });
-    return tree;
-  }
   const products = await ProductCategory.find(find);
-
   const newProducts = createTree(products);
 
   res.render('admin/pages/product-category/index', {
     pageTitle: 'Danh mục sản phẩm',
     products: newProducts,
-    filterStatus: filterStatus,
+    filterStatus: filterStatus, // Trạng thái lọc
     keyword: objectSearch.keyword,
     message: req.flash('success'),
     messages: req.flash('error'),
   });
 };
-// tree
+
 module.exports.create = async (req, res) => {
   try {
     let find = {
       deleted: false,
     };
 
-    function createTree(arr, parentId = '') {
-      const tree = [];
-      arr.forEach((item) => {
-        if (item.parent_id === parentId) {
-          const newItem = item;
-          const children = createTree(arr, item.id); // Đệ quy tìm các con
-          if (children.length > 0) {
-            newItem.children = children;
-          }
-          tree.push(newItem);
-        }
-      });
-      return tree;
-    }
-
     const products = await ProductCategory.find(find);
     const newProducts = createTree(products);
-    console.log(newProducts);
 
     res.render('admin/pages/product-category/create', {
       pageTitle: 'Tạo mục sản phẩm',
@@ -103,7 +73,6 @@ module.exports.createPost = async (req, res) => {
 
     const category = new ProductCategory(req.body);
     await category.save();
-    console.log(category);
 
     req.flash('success', 'Tạo danh mục thành công!');
     res.redirect(`${systemConfig.prefixAdmin}/product-category`);
@@ -247,7 +216,7 @@ module.exports.editPatch = async (req, res) => {
     req.flash('success', 'Sửa sản phẩm thành công!');
     res.redirect(`${systemConfig.prefixAdmin}/product-category`);
   } catch (error) {
-    req.flash('error', 'Lỗi không thể sửa sản phẩm!');
+    req.flash('error', 'Lỗi không thể sửa sản phẩm!', error);
     res.status(500).redirect(req.get('Referrer') || '/');
   }
 };

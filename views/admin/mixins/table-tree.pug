@@ -1,10 +1,10 @@
-mixin table-tree(items, level = 1)
-  each item, index in items
+mixin table-tree(items, level = 1, counter = { value: 1 })
+  each item in items
     - const prefix = Array(level + 1).join("-- ");
     tr
       td
         input(type="checkbox", name="id", value=item.id)
-      td #{ index + 1 }
+      td #{counter.value} <!-- Sử dụng counter.value để hiển thị STT -->
       td
         .product-image-container
           img.product-image(src=item.thumbnail, alt=item.title)
@@ -30,5 +30,6 @@ mixin table-tree(items, level = 1)
             i.fas.fa-edit
           button.btn.btn-danger.btn-sm(data-id=item.id, button-delete, title="Xóa")
             i.fas.fa-trash
+    - counter.value++ <!-- Tăng giá trị counter sau mỗi mục -->
     if item.children && item.children.length > 0
-      +table-tree(item.children, level + 1)
+      +table-tree(item.children, level + 1, counter) <!-- Truyền counter vào đệ quy -->
