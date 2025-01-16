@@ -3,6 +3,7 @@ include ../../mixins/alert.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/table-tree.pug
 
 block main
   +alert-ok(5000)
@@ -50,54 +51,7 @@ block main
               th.text-right Hoạt động
 
           tbody
-            each item, index in products
-              tr
-                td
-                  input(type="checkbox", name="id", value=item.id)
-                td #{ index + 1 }
-                td
-                  .product-image-container
-                    img.product-image(src=item.thumbnail, alt=item.title)
-                td #{ item.title }
-                td
-                  input.form-control.form-control-sm(
-                    type="number",
-                    name="position",
-                    value=item.position,
-                    style="width: 60px",
-                    min="1"
-                  )
-                td
-                  if item.status === "active"
-                    button.badge.badge-success.p-2(
-                      button-change-status,
-                      data-status="active",
-                      data-id=item.id
-                    ) Hoạt động
-                  else
-                    button.badge.badge-danger.p-2(
-                      button-change-status,
-                      data-status="inactive",
-                      data-id=item.id
-                    ) Dừng hoạt động
-                td.text-right
-                  .btn-group
-                    a.btn.btn-info.btn-sm.mr-1(
-                      href=`${prefixAdmin}/product-category/detail/${item.id}`,
-                      title="Chi tiết"
-                    )
-                      i.fas.fa-eye
-                    a.btn.btn-warning.btn-sm.mr-1(
-                      href=`${prefixAdmin}/product-category/edit/${item.id}`,
-                      title="Sửa"
-                    )
-                      i.fas.fa-edit
-                    button.btn.btn-danger.btn-sm(
-                      data-id=item.id,
-                      button-delete,
-                      title="Xóa"
-                    )
-                      i.fas.fa-trash
+            +table-tree(products)
 
   //- Form ẩn để thay đổi trạng thái và xóa
   form#form-change-status(

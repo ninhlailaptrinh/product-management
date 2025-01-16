@@ -18,29 +18,63 @@ module.exports.index = async (req, res) => {
   if (objectSearch.regex) {
     find.title = objectSearch.regex;
   }
+
+  function createTree(arr, parentId = '') {
+    const tree = [];
+    arr.forEach((item) => {
+      if (item.parent_id === parentId) {
+        const newItem = item;
+        const children = createTree(arr, item.id); // Đệ quy tìm các con
+        if (children.length > 0) {
+          newItem.children = children;
+        }
+        tree.push(newItem);
+      }
+    });
+    return tree;
+  }
   const products = await ProductCategory.find(find);
+
+  const newProducts = createTree(products);
 
   res.render('admin/pages/product-category/index', {
     pageTitle: 'Danh mục sản phẩm',
-    products: products,
-    filterStatus: filterStatus, // Trạng thái lọc
-    keyword: objectSearch.keyword, // Từ khóa tìm kiếm
+    products: newProducts,
+    filterStatus: filterStatus,
+    keyword: objectSearch.keyword,
     message: req.flash('success'),
     messages: req.flash('error'),
   });
 };
-
+// tree
 module.exports.create = async (req, res) => {
   try {
     let find = {
       deleted: false,
     };
+
+    function createTree(arr, parentId = '') {
+      const tree = [];
+      arr.forEach((item) => {
+        if (item.parent_id === parentId) {
+          const newItem = item;
+          const children = createTree(arr, item.id); // Đệ quy tìm các con
+          if (children.length > 0) {
+            newItem.children = children;
+          }
+          tree.push(newItem);
+        }
+      });
+      return tree;
+    }
+
     const products = await ProductCategory.find(find);
-    console.log(products); // Kiểm tra dữ liệu trả về
+    const newProducts = createTree(products);
+    console.log(newProducts);
 
     res.render('admin/pages/product-category/create', {
       pageTitle: 'Tạo mục sản phẩm',
-      products: products,
+      products: newProducts,
     });
   } catch (error) {
     console.error(error);
@@ -51,7 +85,6 @@ module.exports.create = async (req, res) => {
 // Xử lý tạo sản phẩm
 module.exports.createPost = async (req, res) => {
   try {
-    // Kiểm tra và xử lý giá trị position
     if (!req.body.position || req.body.position === '') {
       const countCategories = await ProductCategory.countDocuments();
       req.body.position = countCategories + 1;
@@ -59,23 +92,19 @@ module.exports.createPost = async (req, res) => {
       req.body.position = parseInt(req.body.position, 10);
     }
 
-    // Xử lý file upload (nếu có)
     if (req.file) {
       req.body.thumbnail = `/uploads/${req.file.filename}`;
     }
 
-    // Kiểm tra dữ liệu đầu vào
     if (!req.body.title || req.body.title.length < 5) {
       req.flash('error', 'Tên danh mục phải có ít nhất 5 ký tự!');
       return res.redirect(req.get('Referrer') || '/');
     }
 
-    // Lưu danh mục sản phẩm vào database
     const category = new ProductCategory(req.body);
     await category.save();
     console.log(category);
 
-    // Thông báo thành công và chuyển hướng
     req.flash('success', 'Tạo danh mục thành công!');
     res.redirect(`${systemConfig.prefixAdmin}/product-category`);
   } catch (error) {
