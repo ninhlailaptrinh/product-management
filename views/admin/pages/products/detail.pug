@@ -8,10 +8,7 @@ block main
       .card
         .row.g-0
           .col-md-4
-            img.img-fluid.rounded-start(
-              src=product.thumbnail,
-              alt=product.title
-            )
+            img.img-fluid.rounded-start(src=product.thumbnail, alt=product.title)
           .col-md-8
             .card-body
               h2.card-title #{ product.title }
@@ -28,9 +25,7 @@ block main
                   span #{ product.stock }
                 li.list-group-item
                   strong Trạng thái:
-                  span.badge(
-                    class=product.status === "active" ? "bg-success" : "bg-secondary"
-                  ) #{ product.status }
+                  span.badge(class=product.status === "active" ? "bg-success" : "bg-secondary") #{ product.status }
                 li.list-group-item
                   strong Vị trí:
                   span #{ product.position }
@@ -43,23 +38,12 @@ block main
                     span #{ product.deletedAt.toLocaleDateString() }
               //- Nút chỉnh sửa và xóa sản phẩm
               .mt-3
-                a.btn.btn-warning.btn-sm.mr-2(
-                  href=`${prefixAdmin}/products/edit/${product.id}`
-                ) Sửa
-                a.btn.btn-danger.btn-sm(
-                  href="#",
-                  data-id=product.id,
-                  button-delete
-                ) Xóa
+                a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/products/edit/${product.id}`) Sửa
+                a.btn.btn-danger.btn-sm(href="#", data-id=product.id, button-delete) Xóa
     else
       .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
 
   //- Form ẩn để xử lý xóa
-  form#form-delete-status(
-    method="POST",
-    action="",
-    data-path="/admin/products/delete",
-    style="display: none"
-  )
+  form#form-delete-status(method="POST", action="", data-path="/admin/products/delete", style="display: none")
 
   script(src="/admin/js/product.js")

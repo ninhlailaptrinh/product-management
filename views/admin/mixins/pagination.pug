@@ -8,7 +8,5 @@ mixin pagination(pagination)
         li(class=`page-item ${i == pagination.currentPage ? 'active' : ''}`)
           a.page-link(href=`?page=${i}`)= i
 
-      li(
-        class=`page-item ${pagination.currentPage === pagination.totalPage ? 'disabled' : ''}`
-      )
+      li(class=`page-item ${pagination.currentPage === pagination.totalPage ? 'disabled' : ''}`)
         a.page-link(href=`?page=${pagination.currentPage + 1}`) Kế tiếp

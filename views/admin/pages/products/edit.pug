@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block main
   +alert-ok(5000)
@@ -16,13 +17,14 @@ block main
       //- Tiêu đề
       .form-group
         label(for="title") Tiêu đề
-        input#title.form-control(
-          type="text",
-          name="title",
-          required,
-          value=product.title
-        )
-
+        input#title.form-control(type="text", name="title", required, value=product.title)
+      //- Chon danh muc 
+    .form-group.mb-3
+      label.form-label(for="product_category_id") Danh mục
+      select#product_category_id.form-control(name="product_category_id")
+        option(value="") -- Chọn danh mục --
+        if (category)
+          +select-tree(category, 1 , product.product_category_id)
       //- Mô tả
       .form-group
         label(for="desc") Mô tả
@@ -31,12 +33,7 @@ block main
       //- Giá
       .form-group
         label(for="price") Giá
-        input#price.form-control(
-          type="number",
-          name="price",
-          value=product.price,
-          min="0"
-        )
+        input#price.form-control(type="number", name="price", value=product.price, min="0")
 
       //- % Giảm giá
       .form-group
@@ -51,22 +48,12 @@ block main
       //- Số lượng
       .form-group
         label(for="stock") Số lượng
-        input#stock.form-control(
-          type="number",
-          name="stock",
-          value=product.stock,
-          min="0"
-        )
+        input#stock.form-control(type="number", name="stock", value=product.stock, min="0")
 
       //- Ảnh
       .form-group(upload-image)
         label(for="thumbnail") Ảnh
-        input#thumbnail.form-control-file(
-          type="file",
-          name="thumbnail",
-          accept="image/*",
-          upload-image-input
-        )
+        input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
         if product.thumbnail
           img.image-preview(
             src=product.thumbnail,
@@ -78,12 +65,7 @@ block main
       //- Vị trí
       .form-group
         label(for="position") Vị trí
-        input#position.form-control(
-          type="number",
-          name="position",
-          value=product.position,
-          min="1"
-        )
+        input#position.form-control(type="number", name="position", value=product.position, min="1")
 
       //- Trạng thái
       .form-group.form-check.form-check-inline

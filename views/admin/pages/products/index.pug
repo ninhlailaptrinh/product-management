@@ -80,34 +80,16 @@ block main
                   )
                 td
                   if item.status === "active"
-                    button.badge.badge-success.p-2(
-                      button-change-status,
-                      data-status="active",
-                      data-id=item.id
-                    ) Hoạt động
+                    button.badge.badge-success.p-2(button-change-status, data-status="active", data-id=item.id) Hoạt động
                   else
-                    button.badge.badge-danger.p-2(
-                      button-change-status,
-                      data-status="inactive",
-                      data-id=item.id
-                    ) Dừng hoạt động
+                    button.badge.badge-danger.p-2(button-change-status, data-status="inactive", data-id=item.id) Dừng hoạt động
                 td.text-right
                   .btn-group
-                    a.btn.btn-info.btn-sm.mr-1(
-                      href=`${prefixAdmin}/products/detail/${item.id}`,
-                      title="Chi tiết"
-                    )
+                    a.btn.btn-info.btn-sm.mr-1(href=`${prefixAdmin}/products/detail/${item.id}`, title="Chi tiết")
                       i.fas.fa-eye
-                    a.btn.btn-warning.btn-sm.mr-1(
-                      href=`${prefixAdmin}/products/edit/${item.id}`,
-                      title="Sửa"
-                    )
+                    a.btn.btn-warning.btn-sm.mr-1(href=`${prefixAdmin}/products/edit/${item.id}`, title="Sửa")
                       i.fas.fa-edit
-                    button.btn.btn-danger.btn-sm(
-                      data-id=item.id,
-                      button-delete,
-                      title="Xóa"
-                    )
+                    button.btn.btn-danger.btn-sm(data-id=item.id, button-delete, title="Xóa")
                       i.fas.fa-trash
 
   //- Phân trang
@@ -123,12 +105,7 @@ block main
     input#input-status(type="hidden", name="status")
     input#input-id(type="hidden", name="id")
 
-  form#form-delete-status(
-    action="",
-    method="POST",
-    data-path=`${prefixAdmin}/products/delete`,
-    style="display: none"
-  )
+  form#form-delete-status(action="", method="POST", data-path=`${prefixAdmin}/products/delete`, style="display: none")
     input#input-status(type="hidden", name="status")
     input#input-id(type="hidden", name="id")
 

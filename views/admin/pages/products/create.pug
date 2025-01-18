@@ -1,23 +1,23 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block main
   +alert-err(5000) 
 
   h1.mb-4 Thêm sản phẩm
 
-  form#form-create-product(
-    action=`${prefixAdmin}/products/create`,
-    method="POST",
-    enctype="multipart/form-data"
-  )
+  form#form-create-product(action=`${prefixAdmin}/products/create`, method="POST", enctype="multipart/form-data")
     .form-group
       label(for="title") Tiêu đề
-      input#title.form-control.textarea-mce(
-        type="text",
-        name="title",
-        required
-      )
+      input#title.form-control.textarea-mce(type="text", name="title", required)
+
+    .form-group.mb-3
+      label.form-label(for="product_category_id") Danh mục
+      select#product_category_id.form-control(name="product_category_id")
+        option(value="") -- Chọn danh mục --
+        if (category)
+          +select-tree(category)
 
     .form-group
       label(for="desc") Mô tả
@@ -29,12 +29,7 @@ block main
 
     .form-group
       label(for="discount") % Giảm giá
-      input#discount.form-control(
-        type="number",
-        name="discountPercentage",
-        value="0",
-        min="0"
-      )
+      input#discount.form-control(type="number", name="discountPercentage", value="0", min="0")
 
     .form-group
       label(for="stock") Số lượng
@@ -42,38 +37,18 @@ block main
 
     .form-group(upload-image)
       label(for="thumbnail") Ảnh
-      input#thumbnail.form-control-file(
-        type="file",
-        name="thumbnail",
-        accept="image/*",
-        upload-image-input
-      )
+      input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
       image.image-preview(src="", upload-image-preview) 
 
     .form-group
       label(for="position") Vị trí
-      input#position.form-control(
-        type="number",
-        name="position",
-        placeholder="Tự động tăng",
-        min="1"
-      )
+      input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
 
     .form-group.form-check.form-check-inline
-      input#statusActive.form-check-input(
-        type="radio",
-        name="status",
-        value="active",
-        checked
-      )
+      input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
       label.form-check-label(for="isHot") Hoạt động
     .form-group.form-check.form-check-inline
-      input#statusActive.form-check-input(
-        type="radio",
-        name="status",
-        value="inactive",
-        checked
-      )
+      input#statusActive.form-check-input(type="radio", name="status", value="inactive", checked)
       label.form-check-label(for="isHot") Dừng hoạt động
 
     .form-group

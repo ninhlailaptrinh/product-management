@@ -8,10 +8,7 @@ block main
       .card
         .row.g-0
           .col-md-4
-            img.img-fluid.rounded-start(
-              src=products.thumbnail,
-              alt=products.title
-            )
+            img.img-fluid.rounded-start(src=products.thumbnail, alt=products.title)
           .col-md-8
             .card-body
               h2.card-title #{ products.title }
@@ -19,9 +16,7 @@ block main
               ul.list-group.list-group-flush
                 li.list-group-item
                   strong Trạng thái:
-                  span.badge(
-                    class=products.status === "active" ? "bg-success" : "bg-secondary"
-                  ) #{ products.status }
+                  span.badge(class=products.status === "active" ? "bg-success" : "bg-secondary") #{ products.status }
                 li.list-group-item
                   strong Vị trí:
                   span #{ products.position }
@@ -33,24 +28,13 @@ block main
                     strong Ngày xóa:
                     span #{ products.deletedAt.toLocaleDateString() }
               .mt-3
-                a.btn.btn-warning.btn-sm.mr-2(
-                  href=`${prefixAdmin}/product-category/edit/${products.id}`
-                ) Sửa
-                a.btn.btn-danger.btn-sm(
-                  href="#",
-                  data-id=products.id,
-                  button-delete
-                ) Xóa
+                a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/product-category/edit/${products.id}`) Sửa
+                a.btn.btn-danger.btn-sm(href="#", data-id=products.id, button-delete) Xóa
     else
       .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
       a.btn.btn-primary(href=`${prefixAdmin}/product-category`) Quay lại danh sách
 
   //- Form ẩn để xử lý xóa
-  form#form-delete-status(
-    method="POST",
-    action="",
-    data-path="/admin/product-category/delete",
-    style="display: none"
-  )
+  form#form-delete-status(method="POST", action="", data-path="/admin/product-category/delete", style="display: none")
 
   script(src="/admin/js/product.js")

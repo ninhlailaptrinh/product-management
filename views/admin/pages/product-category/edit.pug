@@ -16,12 +16,7 @@ block main
       //- Tiêu đề
       .form-group
         label(for="title") Tiêu đề
-        input#title.form-control(
-          type="text",
-          name="title",
-          required,
-          value=product.title
-        )
+        input#title.form-control(type="text", name="title", required, value=product.title)
 
       //- Mô tả
       .form-group
@@ -31,12 +26,7 @@ block main
       //- Ảnh
       .form-group(upload-image)
         label(for="thumbnail") Ảnh
-        input#thumbnail.form-control-file(
-          type="file",
-          name="thumbnail",
-          accept="image/*",
-          upload-image-input
-        )
+        input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
         if product.thumbnail
           img.image-preview(
             src=product.thumbnail,
@@ -48,12 +38,7 @@ block main
       //- Vị trí
       .form-group
         label(for="position") Vị trí
-        input#position.form-control(
-          type="number",
-          name="position",
-          value=product.position,
-          min="1"
-        )
+        input#position.form-control(type="number", name="position", value=product.position, min="1")
 
       //- Trạng thái
       .form-group.form-check.form-check-inline

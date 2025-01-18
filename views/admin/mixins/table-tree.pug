@@ -4,7 +4,7 @@ mixin table-tree(items, level = 1, counter = { value: 1 })
     tr
       td
         input(type="checkbox", name="id", value=item.id)
-      td #{counter.value} <!-- Sử dụng counter.value để hiển thị STT -->
+      td #{ counter.value } <!-- Sử dụng counter.value để hiển thị STT -->
       td
         .product-image-container
           img.product-image(src=item.thumbnail, alt=item.title)

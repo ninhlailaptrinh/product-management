@@ -1,11 +1,6 @@
 mixin search(keyword)
   form#form-search
     .input-group
-      input.form-control(
-        type="text",
-        placeholder="Nhập từ khóa tìm kiếm",
-        name="keyword",
-        value=keyword || ""
-      )
+      input.form-control(type="text", placeholder="Nhập từ khóa tìm kiếm", name="keyword", value=keyword || "")
       .input-group-append
         button.btn.btn-success(type="submit") Tìm kiếm

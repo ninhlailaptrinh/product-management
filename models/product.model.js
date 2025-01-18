@@ -1,9 +1,13 @@
-const mongoose = require("mongoose");
-const slug = require("mongoose-slug-updater");
+const mongoose = require('mongoose');
+const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
   {
     title: String,
+    product_category_id: {
+      type: String,
+      default: '',
+    },
     description: String,
     price: Number,
     discountPercentage: Number,
@@ -11,7 +15,7 @@ const productSchema = new mongoose.Schema(
     stock: Number,
     status: String,
     position: Number,
-    slug: { type: String, slug: "title", unique: true }, // unique: true => slug không được trùng
+    slug: { type: String, slug: 'title', unique: true }, // unique: true => slug không được trùng
     deleted: {
       type: Boolean,
       default: false,
@@ -23,6 +27,6 @@ const productSchema = new mongoose.Schema(
   },
 );
 
-const Product = mongoose.model("Product", productSchema, "products");
+const Product = mongoose.model('Product', productSchema, 'products');
 
 module.exports = Product;
