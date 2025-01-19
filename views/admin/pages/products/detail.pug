@@ -2,48 +2,104 @@ extends ../../layouts/default.pug
 
 block main
   .container.my-5
-    h1.mb-4 Chi tiết sản phẩm
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .d-flex.justify-content-between.align-items-center.mb-4
+          h1.mb-0
+            i.fas.fa-info-circle.mr-2
+            | Chi tiết sản phẩm
+          a.btn.btn-light(href=`${prefixAdmin}/products`)
+            i.fas.fa-arrow-left.mr-2
+            | Quay lại
 
-    if product
-      .card
-        .row.g-0
-          .col-md-4
-            img.img-fluid.rounded-start(src=product.thumbnail, alt=product.title)
-          .col-md-8
-            .card-body
-              h2.card-title #{ product.title }
-              p.card-text.text-muted #{ product.description }
-              ul.list-group.list-group-flush
-                li.list-group-item
-                  strong Giá:
-                  span #{ product.price.toLocaleString() } VND
-                li.list-group-item
-                  strong Giảm giá:
-                  span #{ product.discountPercentage }%
-                li.list-group-item
-                  strong Tồn kho:
-                  span #{ product.stock }
-                li.list-group-item
-                  strong Trạng thái:
-                  span.badge(class=product.status === "active" ? "bg-success" : "bg-secondary") #{ product.status }
-                li.list-group-item
-                  strong Vị trí:
-                  span #{ product.position }
-                li.list-group-item
-                  strong Đã xóa:
-                  span.badge(class=product.deleted ? "bg-danger" : "bg-success") #{ product.deleted ? "Có" : "Không" }
-                if product.deleted
-                  li.list-group-item
-                    strong Ngày xóa:
-                    span #{ product.deletedAt.toLocaleDateString() }
-              //- Nút chỉnh sửa và xóa sản phẩm
-              .mt-3
-                a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/products/edit/${product.id}`) Sửa
-                a.btn.btn-danger.btn-sm(href="#", data-id=product.id, button-delete) Xóa
-    else
-      .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
+        if product
+          .card.product-detail
+            .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+              h5.mb-0
+                i.fas.fa-box.mr-2
+                | Thông tin sản phẩm
+              .badge.badge-light
+                i.fas.fa-calendar.mr-2
+                | ID: #{ product._id }
 
-  //- Form ẩn để xử lý xóa
+            .row.g-0
+              .col-md-4.p-3
+                if product.thumbnail
+                  img.img-fluid.rounded(src=product.thumbnail, alt=product.title)
+                else
+                  .text-center.py-5.bg-light.rounded
+                    i.fas.fa-image.fa-3x.text-muted
+                    p.mt-2.text-muted Chưa có ảnh
+
+              .col-md-8
+                .card-body
+                  h2.card-title.mb-4
+                    i.fas.fa-tag.mr-2.text-primary
+                    | #{ product.title }
+
+                  .card.bg-light.mb-4
+                    .card-body
+                      h5.card-subtitle.mb-3
+                        i.fas.fa-align-left.mr-2
+                        | Mô tả
+                      p.card-text #{ product.description || "Chưa có mô tả" }
+
+                  .row
+                    .col-md-6
+                      ul.list-group.list-group-flush.mb-4
+                        li.list-group-item.d-flex.justify-content-between.align-items-center
+                          span
+                            i.fas.fa-dollar-sign.mr-2
+                            | Giá bán
+                          strong.text-primary #{ product.price.toLocaleString() } VNĐ
+
+                        li.list-group-item.d-flex.justify-content-between.align-items-center
+                          span
+                            i.fas.fa-percent.mr-2
+                            | Giảm giá
+                          strong.text-danger #{ product.discountPercentage }%
+
+                        li.list-group-item.d-flex.justify-content-between.align-items-center
+                          span
+                            i.fas.fa-boxes.mr-2
+                            | Tồn kho
+                          strong #{ product.stock }
+
+                    .col-md-6
+                      ul.list-group.list-group-flush.mb-4
+                        li.list-group-item.d-flex.justify-content-between.align-items-center
+                          span
+                            i.fas.fa-sort-numeric-down.mr-2
+                            | Vị trí
+                          strong #{ product.position }
+
+                        li.list-group-item.d-flex.justify-content-between.align-items-center
+                          span
+                            i.fas.fa-toggle-on.mr-2
+                            | Trạng thái
+                          span.badge(class=product.status === "active" ? "badge-success" : "badge-secondary")
+                            | #{ product.status === "active" ? "Hoạt động" : "Dừng" }
+
+                        if product.deleted
+                          li.list-group-item.d-flex.justify-content-between.align-items-center
+                            span
+                              i.fas.fa-calendar-times.mr-2
+                              | Ngày xóa
+                            span.text-danger #{ product.deletedAt.toLocaleDateString() }
+
+                  .mt-4.text-end
+                    a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/products/edit/${product.id}`)
+                      i.fas.fa-edit.mr-2
+                      | Sửa
+                    a.btn.btn-danger.btn-sm(href="#", data-id=product.id, button-delete)
+                      i.fas.fa-trash.mr-2
+                      | Xóa
+        else
+          .alert.alert-warning
+            i.fas.fa-exclamation-triangle.mr-2
+            | Sản phẩm không tồn tại hoặc đã bị xóa.
+
+  //- Form ẩn để xử lý xóa  
   form#form-delete-status(method="POST", action="", data-path="/admin/products/delete", style="display: none")
     input.input-status(type="hidden", name="status")
     input.input-id(type="hidden", name="id")

@@ -42,3 +42,10 @@ block main
             else
               tr
                 td.text-center(colspan="4") Chưa có nhóm quyền nào được tạo.
+
+  //- Form ẩn để xử lý xóa
+  form#form-delete-status(action="", method="POST", data-path=`${prefixAdmin}/roles/delete`, style="display: none")
+    input(type="hidden", name="_method", value="DELETE")
+    input.input-id(type="hidden", name="id")
+
+  script(src="/admin/js/product.js")

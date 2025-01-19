@@ -5,64 +5,95 @@ block main
   +alert-ok(5000)
   +alert-err(5000)
 
-  h1.mb-4 Sửa danh mục
+  .container
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .card.shadow-sm.category-edit-form.mb-4
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h5.mb-0
+              i.fas.fa-edit.mr-2
+              | Chỉnh sửa danh mục
+            a.btn.btn-light.btn-sm(href=`${prefixAdmin}/product-category`)
+              i.fas.fa-arrow-left.mr-2
+              | Quay lại
 
-  if product
-    form#form-edit-product(
-      action=`${prefixAdmin}/product-category/edit/${product._id}?_method=PATCH`,
-      method="POST",
-      enctype="multipart/form-data"
-    )
-      //- Tiêu đề
-      .form-group
-        label(for="title") Tiêu đề
-        input#title.form-control(type="text", name="title", required, value=product.title)
+          .card-body
+            if product
+              form#form-edit-product(
+                action=`${prefixAdmin}/product-category/edit/${product._id}?_method=PATCH`,
+                method="POST",
+                enctype="multipart/form-data"
+              )
+                .row
+                  .col-md-8
+                    .form-group
+                      label.form-label(for="title")
+                        i.fas.fa-heading
+                        | Tiêu đề
+                      input#title.form-control(
+                        type="text",
+                        name="title",
+                        required,
+                        value=product.title,
+                        placeholder="Nhập tiêu đề danh mục..."
+                      )
 
-      //- Mô tả
-      .form-group
-        label(for="desc") Mô tả
-        textarea#desc.form-control(name="description", rows="5") #{ product.description }
+                    .form-group
+                      label.form-label(for="desc")
+                        i.fas.fa-align-left
+                        | Mô tả
+                      textarea#desc.form-control(name="description", rows="5", placeholder="Nhập mô tả danh mục...") #{ product.description }
 
-      //- Ảnh
-      .form-group(upload-image)
-        label(for="thumbnail") Ảnh
-        input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
-        if product.thumbnail
-          img.image-preview(
-            src=product.thumbnail,
-            upload-image-preview,
-            alt="Ảnh danh mục",
-            style="width: 150px; margin-top: 10px"
-          )
+                  .col-md-4
+                    .form-group(upload-image)
+                      label.form-label(for="thumbnail")
+                        i.fas.fa-image
+                        | Ảnh đại diện
+                      input#thumbnail.form-control-file(
+                        type="file",
+                        name="thumbnail",
+                        accept="image/*",
+                        upload-image-input
+                      )
+                      if product.thumbnail
+                        img.image-preview(src=product.thumbnail, upload-image-preview, alt="Ảnh danh mục")
 
-      //- Vị trí
-      .form-group
-        label(for="position") Vị trí
-        input#position.form-control(type="number", name="position", value=product.position, min="1")
+                    .form-group
+                      label.form-label(for="position")
+                        i.fas.fa-sort-numeric-down
+                        | Vị trí
+                      input#position.form-control(type="number", name="position", value=product.position, min="1")
 
-      //- Trạng thái
-      .form-group.form-check.form-check-inline
-        input#statusActive.form-check-input(
-          type="radio",
-          name="status",
-          value="active",
-          checked=product.status === "active"
-        )
-        label.form-check-label(for="statusActive") Hoạt động
+                    .form-group
+                      label.form-label
+                        i.fas.fa-toggle-on
+                        | Trạng thái
+                      .d-flex.align-items-center
+                        .form-check.form-check-inline
+                          input#statusActive.form-check-input(
+                            type="radio",
+                            name="status",
+                            value="active",
+                            checked=product.status === "active"
+                          )
+                          label.form-check-label(for="statusActive")
+                            span.badge.bg-success Hoạt động
 
-      .form-group.form-check.form-check-inline
-        input#statusInactive.form-check-input(
-          type="radio",
-          name="status",
-          value="inactive",
-          checked=product.status === "inactive"
-        )
-        label.form-check-label(for="statusInactive") Dừng hoạt động
+                        .form-check.form-check-inline
+                          input#statusInactive.form-check-input(
+                            type="radio",
+                            name="status",
+                            value="inactive",
+                            checked=product.status === "inactive"
+                          )
+                          label.form-check-label(for="statusInactive")
+                            span.badge.bg-danger Dừng hoạt động
 
-      //- Nút submit
-      .form-group
-        button.btn.btn-primary(type="submit") Lưu lại
-  else
-    p Không có thông tin danh mục
+                .form-group.mb-0.text-center
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-save.mr-2
+                    | Lưu thay đổi
+            else
+              .alert.alert-warning.mb-0 Không tìm thấy thông tin danh mục
 
   script(src="/admin/js/product.js")

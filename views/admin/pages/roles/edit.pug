@@ -7,20 +7,26 @@ block main
 
   .card.shadow-sm.mb-4
     .card-header.bg-gradient-primary.text-white.d-flex.justify-content-between.align-items-center
-      span Thêm mới nhóm quyền
+      span Sửa nhóm quyền
       a.btn.btn-light.btn-sm(href=`${prefixAdmin}/roles`)
         i.fas.fa-arrow-left.mr-2
         | Quay lại
 
     .card-body
-      form(action=`${prefixAdmin}/roles/create`, method="POST")
+      form(action=`${prefixAdmin}/roles/edit/${roles._id}?_method=PATCH`, method="POST")
         .form-group
           label(for="title") Tiêu đề
-          input#title.form-control(type="text", name="title", required, placeholder="Nhập tiêu đề...")
+          input#title.form-control(
+            type="text",
+            name="title",
+            required,
+            value=roles.title,
+            placeholder="Nhập tiêu đề..."
+          )
 
         .form-group
-          label(for="description") Mô tả
-          textarea#description.form-control(name="description", rows="3", placeholder="Nhập mô tả...")
+          label(for="desc") Mô tả
+          textarea#desc.form-control(name="description", rows="3", placeholder="Nhập mô tả...") #{ roles.description }
 
         .form-group.text-right
           button.btn.btn-primary(type="submit")

@@ -5,63 +5,120 @@ include ../../mixins/select-tree.pug
 block main
   +alert-err(5000) 
 
-  h1.mb-4 Thêm sản phẩm
+  .container
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .card.shadow-sm.mb-4
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h5.mb-0 Thêm sản phẩm mới
+            a.btn.btn-light.btn-sm(href=`${prefixAdmin}/products`)
+              i.fas.fa-arrow-left.mr-2
+              | Quay lại
 
-  form#form-create-product(action=`${prefixAdmin}/products/create`, method="POST", enctype="multipart/form-data")
-    .form-group
-      label(for="title") Tiêu đề
-      input#title.form-control.textarea-mce(type="text", name="title", required)
+          .card-body
+            form#form-create-product.form-create-product(
+              action=`${prefixAdmin}/products/create`,
+              method="POST",
+              enctype="multipart/form-data"
+            )
+              .row
+                .col-md-8
+                  .form-group
+                    label(for="title") 
+                      i.fas.fa-heading.mr-2
+                      | Tiêu đề
+                    input#title.form-control(
+                      type="text",
+                      name="title",
+                      required,
+                      placeholder="Nhập tiêu đề sản phẩm..."
+                    )
 
-    .form-group.mb-3
-      label.form-label(for="product_category_id") Danh mục
-      select#product_category_id.form-control(name="product_category_id")
-        option(value="") -- Chọn danh mục --
-        if (category)
-          +select-tree(category)
+                  .form-group
+                    label(for="product_category_id")
+                      i.fas.fa-folder.mr-2
+                      | Danh mục
+                    select#product_category_id.form-control(name="product_category_id")
+                      option(value="") -- Chọn danh mục --
+                      if (category)
+                        +select-tree(category)
 
-    .form-group
-      label(for="desc") Mô tả
-      textarea#desc.form-control.textarea-mce(name="description", rows="5")
+                  .form-group
+                    label(for="desc")
+                      i.fas.fa-align-left.mr-2
+                      | Mô tả
+                    textarea#desc.form-control.textarea-mce(
+                      name="description",
+                      rows="5",
+                      placeholder="Nhập mô tả sản phẩm..."
+                    )
 
-    .form-group
-      label(for="price") Giá
-      input#price.form-control(type="number", name="price", value="0", min="0")
+                .col-md-4
+                  .form-group
+                    label(for="price")
+                      i.fas.fa-dollar-sign.mr-2
+                      | Giá
+                    .input-group
+                      input#price.form-control(type="number", name="price", value="0", min="0")
+                      .input-group-append
+                        span.input-group-text VNĐ
 
-    .form-group
-      label(for="discount") % Giảm giá
-      input#discount.form-control(type="number", name="discountPercentage", value="0", min="0")
+                  .form-group
+                    label(for="discount")
+                      i.fas.fa-percent.mr-2
+                      | Giảm giá
+                    .input-group
+                      input#discount.form-control(
+                        type="number",
+                        name="discountPercentage",
+                        value="0",
+                        min="0",
+                        max="100"
+                      )
+                      .input-group-append
+                        span.input-group-text %
 
-    .form-group
-      label(for="stock") Số lượng
-      input#stock.form-control(type="number", name="stock", value="0", min="0")
+                  .form-group
+                    label(for="stock")
+                      i.fas.fa-cubes.mr-2
+                      | Số lượng
+                    input#stock.form-control(type="number", name="stock", value="0", min="0")
 
-    .form-group(upload-image)
-      label(for="thumbnail") Ảnh
-      input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
-      image.image-preview(src="", upload-image-preview) 
+                  .form-group(upload-image)
+                    label(for="thumbnail")
+                      i.fas.fa-image.mr-2
+                      | Ảnh sản phẩm
+                    input#thumbnail.form-control-file(
+                      type="file",
+                      name="thumbnail",
+                      accept="image/*",
+                      upload-image-input
+                    )
+                    img.image-preview(src="", upload-image-preview)
 
-    .form-group
-      label(for="position") Vị trí
-      input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
+                  .form-group
+                    label(for="position")
+                      i.fas.fa-sort-numeric-down.mr-2
+                      | Vị trí
+                    input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
 
-    .form-group.form-check.form-check-inline
-      input#statusActive.form-check-input(
-        type="radio",
-        name="status",
-        value="active",
-        checked=product && product.status == "active"
-      )
-      label.form-check-label(for="statusActive") Hoạt động
-    .form-group.form-check.form-check-inline
-      input#statusInactive.form-check-input(
-        type="radio",
-        name="status",
-        value="inactive",
-        checked=product && product.status == "inactive"
-      )
-      label.form-check-label(for="statusInactive") Dừng hoạt động
+                  .form-group
+                    label.d-block
+                      i.fas.fa-toggle-on.mr-2
+                      | Trạng thái
+                    .form-check.form-check-inline
+                      input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
+                      label.form-check-label(for="statusActive")
+                        span.badge.badge-success Hoạt động
 
-    .form-group
-      button.btn.btn-primary(type="submit") Thêm sản phẩm
+                    .form-check.form-check-inline
+                      input#statusInactive.form-check-input(type="radio", name="status", value="inactive")
+                      label.form-check-label(for="statusInactive")
+                        span.badge.badge-danger Dừng hoạt động
+
+              .form-group.text-right.mt-4
+                button.btn.btn-primary(type="submit")
+                  i.fas.fa-save.mr-2
+                  | Thêm sản phẩm
 
   script(src="/admin/js/product.js")

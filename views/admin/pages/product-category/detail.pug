@@ -2,37 +2,84 @@ extends ../../layouts/default.pug
 
 block main
   .container.my-5
-    h1.mb-4 Chi tiết danh mục
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .d-flex.justify-content-between.align-items-center.mb-4
+          h1.mb-0
+            i.fas.fa-info-circle.mr-2
+            | Chi tiết danh mục
+          a.btn.btn-light(href=`${prefixAdmin}/product-category`)
+            i.fas.fa-arrow-left.mr-2
+            | Quay lại
 
-    if products
-      .card
-        .row.g-0
-          .col-md-4
-            img.img-fluid.rounded-start(src=products.thumbnail, alt=products.title)
-          .col-md-8
-            .card-body
-              h2.card-title #{ products.title }
-              p.card-text.text-muted #{ products.description }
-              ul.list-group.list-group-flush
-                li.list-group-item
-                  strong Trạng thái:
-                  span.badge(class=products.status === "active" ? "bg-success" : "bg-secondary") #{ products.status }
-                li.list-group-item
-                  strong Vị trí:
-                  span #{ products.position }
-                li.list-group-item
-                  strong Đã xóa:
-                  span.badge(class=products.deleted ? "bg-danger" : "bg-success") #{ products.deleted ? "Có" : "Không" }
-                if products.deleted
-                  li.list-group-item
-                    strong Ngày xóa:
-                    span #{ products.deletedAt.toLocaleDateString() }
-              .mt-3
-                a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/product-category/edit/${products.id}`) Sửa
-                a.btn.btn-danger.btn-sm(href="#", data-id=products.id, button-delete) Xóa
-    else
-      .alert.alert-warning Sản phẩm không tồn tại hoặc đã bị xóa.
-      a.btn.btn-primary(href=`${prefixAdmin}/product-category`) Quay lại danh sách
+        if products
+          .card.category-detail
+            .card-header.d-flex.justify-content-between.align-items-center
+              h5.mb-0 Thông tin chi tiết
+              .badge.badge-light
+                i.fas.fa-calendar.mr-2
+                | Ngày tạo: #{ products.createdAt && products.createdAt.toLocaleDateString() }
+
+            .row.g-0
+              .col-md-4.p-3
+                if products.thumbnail
+                  img.img-fluid.rounded-start(src=products.thumbnail, alt=products.title)
+                else
+                  .text-center.py-5.bg-light.rounded
+                    i.fas.fa-image.fa-3x.text-muted
+                    p.mt-2.text-muted Chưa có ảnh
+
+              .col-md-8
+                .card-body
+                  h2.card-title
+                    i.fas.fa-folder.mr-2.text-primary
+                    | #{ products.title }
+                  p.card-text.text-muted
+                    i.fas.fa-align-left.mr-2
+                    | #{ products.description || "Chưa có mô tả" }
+
+                  ul.list-group.list-group-flush.mt-4
+                    li.list-group-item.d-flex.align-items-center
+                      strong
+                        i.fas.fa-toggle-on.mr-2
+                        | Trạng thái:
+                      span.badge(class=products.status === "active" ? "bg-success" : "bg-secondary")
+                        | #{ products.status === "active" ? "Hoạt động" : "Dừng hoạt động" }
+
+                    li.list-group-item.d-flex.align-items-center
+                      strong
+                        i.fas.fa-sort-numeric-down.mr-2
+                        | Vị trí:
+                      span.badge.bg-info #{ products.position }
+
+                    li.list-group-item.d-flex.align-items-center
+                      strong
+                        i.fas.fa-trash-alt.mr-2
+                        | Trạng thái xóa:
+                      span.badge(class=products.deleted ? "bg-danger" : "bg-success")
+                        | #{ products.deleted ? "Đã xóa" : "Chưa xóa" }
+
+                    if products.deleted && products.deletedAt
+                      li.list-group-item.d-flex.align-items-center
+                        strong
+                          i.fas.fa-calendar-times.mr-2
+                          | Ngày xóa:
+                        span.text-danger #{ products.deletedAt.toLocaleDateString() }
+
+                  .mt-4.text-end
+                    a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/product-category/edit/${products.id}`)
+                      i.fas.fa-edit.mr-2
+                      | Sửa
+                    a.btn.btn-danger.btn-sm(href="#", data-id=products.id, button-delete)
+                      i.fas.fa-trash.mr-2
+                      | Xóa
+        else
+          .alert.alert-warning
+            i.fas.fa-exclamation-triangle.mr-2
+            | Danh mục không tồn tại hoặc đã bị xóa.
+          a.btn.btn-primary(href=`${prefixAdmin}/product-category`)
+            i.fas.fa-arrow-left.mr-2
+            | Quay lại danh sách
 
   //- Form ẩn để xử lý xóa
   form#form-delete-status(method="POST", action="", data-path="/admin/product-category/delete", style="display: none")

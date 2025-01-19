@@ -6,90 +6,140 @@ block main
   +alert-ok(5000)
   +alert-err(5000)
 
-  h1.mb-4 Sửa sản phẩm
+  .container.my-5
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .d-flex.justify-content-between.align-items-center.mb-4
+          h1.mb-0
+            i.fas.fa-edit.mr-2
+            | Sửa sản phẩm
+          a.btn.btn-light(href=`${prefixAdmin}/products`)
+            i.fas.fa-arrow-left.mr-2
+            | Quay lại
 
-  if product
-    form#form-edit-product(
-      action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`,
-      method="POST",
-      enctype="multipart/form-data"
-    )
-      //- Tiêu đề
-      .form-group
-        label(for="title") Tiêu đề
-        input#title.form-control(type="text", name="title", required, value=product.title)
-      //- Chon danh muc 
-      .form-group.mb-3
-        label.form-label(for="product_category_id") Danh mục
-        select#product_category_id.form-control(name="product_category_id")
-          option(value="") -- Chọn danh mục --
-          if (category)
-            +select-tree(category, 1 , product.product_category_id)
-      //- Mô tả
-      .form-group
-        label(for="desc") Mô tả
-        textarea#desc.form-control(name="description", rows="5") #{ product.description }
+        if product
+          .card.product-edit-form
+            .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+              h5.mb-0
+                i.fas.fa-info-circle.mr-2
+                | Thông tin sản phẩm
+              span.badge.badge-light
+                i.fas.fa-calendar.mr-2
+                | ID: #{ product._id }
 
-      //- Giá
-      .form-group
-        label(for="price") Giá
-        input#price.form-control(type="number", name="price", value=product.price, min="0")
+            .card-body
+              form#form-edit-product(
+                action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`,
+                method="POST",
+                enctype="multipart/form-data"
+              )
+                .row
+                  .col-md-8
+                    .form-group.mb-3
+                      label.form-label(for="title")
+                        i.fas.fa-heading.mr-2
+                        | Tiêu đề
+                      input#title.form-control(
+                        type="text",
+                        name="title",
+                        required,
+                        value=product.title,
+                        placeholder="Nhập tiêu đề sản phẩm..."
+                      )
 
-      //- % Giảm giá
-      .form-group
-        label(for="discount") % Giảm giá
-        input#discount.form-control(
-          type="number",
-          name="discountPercentage",
-          value=product.discountPercentage,
-          min="0"
-        )
+                    .form-group.mb-3
+                      label.form-label(for="product_category_id")
+                        i.fas.fa-folder.mr-2
+                        | Danh mục
+                      select#product_category_id.form-control(name="product_category_id")
+                        option(value="") -- Chọn danh mục --
+                        if (category)
+                          +select-tree(category, 1, product.product_category_id)
 
-      //- Số lượng
-      .form-group
-        label(for="stock") Số lượng
-        input#stock.form-control(type="number", name="stock", value=product.stock, min="0")
+                    .form-group.mb-3
+                      label.form-label(for="desc")
+                        i.fas.fa-align-left.mr-2
+                        | Mô tả
+                      textarea#desc.form-control(name="description", rows="5", placeholder="Nhập mô tả sản phẩm...") #{ product.description }
 
-      //- Ảnh
-      .form-group(upload-image)
-        label(for="thumbnail") Ảnh
-        input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
-        if product.thumbnail
-          img.image-preview(
-            src=product.thumbnail,
-            upload-image-preview,
-            alt="Ảnh sản phẩm",
-            style="width: 150px; margin-top: 10px"
-          )
+                  .col-md-4
+                    .form-group.mb-3(upload-image)
+                      label.form-label(for="thumbnail")
+                        i.fas.fa-image.mr-2
+                        | Ảnh sản phẩm
+                      input#thumbnail.form-control-file(
+                        type="file",
+                        name="thumbnail",
+                        accept="image/*",
+                        upload-image-input
+                      )
+                      if product.thumbnail
+                        img.image-preview(src=product.thumbnail, upload-image-preview, alt="Ảnh sản phẩm")
 
-      //- Vị trí
-      .form-group
-        label(for="position") Vị trí
-        input#position.form-control(type="number", name="position", value=product.position, min="1")
+                    .form-group.mb-3
+                      label.form-label(for="price")
+                        i.fas.fa-tag.mr-2
+                        | Giá
+                      .input-group
+                        input#price.form-control(type="number", name="price", value=product.price, min="0")
+                        .input-group-append
+                          span.input-group-text VNĐ
 
-      //- Trạng thái
-      .form-group.form-check.form-check-inline
-        input#statusActive.form-check-input(
-          type="radio",
-          name="status",
-          value="active",
-          checked=product.status === "active"
-        )
-        label.form-check-label(for="statusActive") Hoạt động
+                    .form-group.mb-3
+                      label.form-label(for="discount")
+                        i.fas.fa-percent.mr-2
+                        | Giảm giá
+                      input#discount.form-control(
+                        type="number",
+                        name="discountPercentage",
+                        value=product.discountPercentage,
+                        min="0",
+                        max="100"
+                      )
 
-      .form-group.form-check.form-check-inline
-        input#statusInactive.form-check-input(
-          type="radio",
-          name="status",
-          value="inactive",
-          checked=product.status === "inactive"
-        )
-        label.form-check-label(for="statusInactive") Dừng hoạt động
+                    .form-group.mb-3
+                      label.form-label(for="stock")
+                        i.fas.fa-boxes.mr-2
+                        | Số lượng
+                      input#stock.form-control(type="number", name="stock", value=product.stock, min="0")
 
-      //- Nút submit
-      .form-group
-        button.btn.btn-primary(type="submit") Lưu lại
-  else
-    p Không có thông tin sản phẩm.
+                    .form-group.mb-3
+                      label.form-label(for="position")
+                        i.fas.fa-sort-numeric-down.mr-2
+                        | Vị trí
+                      input#position.form-control(type="number", name="position", value=product.position, min="1")
+
+                    .form-group.mb-4
+                      label.form-label.d-block
+                        i.fas.fa-toggle-on.mr-2
+                        | Trạng thái
+                      .btn-group.btn-group-toggle.w-100(data-toggle="buttons")
+                        label.btn.btn-outline-success.active(class=product.status === "active" ? "active" : "")
+                          input#statusActive(
+                            type="radio",
+                            name="status",
+                            value="active",
+                            checked=product.status === "active"
+                          )
+                          i.fas.fa-check.mr-2
+                          | Hoạt động
+                        label.btn.btn-outline-secondary(class=product.status === "inactive" ? "active" : "")
+                          input#statusInactive(
+                            type="radio",
+                            name="status",
+                            value="inactive",
+                            checked=product.status === "inactive"
+                          )
+                          i.fas.fa-times.mr-2
+                          | Dừng
+
+                .text-center.mt-4
+                  button.btn.btn-primary.btn-lg(type="submit")
+                    i.fas.fa-save.mr-2
+                    | Lưu thay đổi
+        else
+          .alert.alert-warning
+            i.fas.fa-exclamation-triangle.mr-2
+            | Không tìm thấy thông tin sản phẩm
 
   script(src="/admin/js/product.js")

@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-5
+    .row.justify-content-center
+      .col-12.col-lg-10
+        .d-flex.justify-content-between.align-items-center.mb-4
+          h1.mb-0
+            i.fas.fa-user-shield.mr-2
+            | Chi tiết nhóm quyền
+          a.btn.btn-light(href=`${prefixAdmin}/roles`)
+            i.fas.fa-arrow-left.mr-2
+            | Quay lại
+
+        if roles
+          .card.role-detail
+            .card-header.d-flex.justify-content-between.align-items-center
+              h5.mb-0
+                i.fas.fa-info-circle.mr-2
+                | Thông tin nhóm quyền
+              .badge.badge-light
+                i.fas.fa-calendar.mr-2
+                | Ngày tạo: #{ roles.createdAt && roles.createdAt.toLocaleDateString() }
+
+            .card-body
+              .row
+                .col-md-12
+                  h2.card-title.mb-4
+                    i.fas.fa-tag.mr-2.text-primary
+                    | #{ roles.title }
+
+                  .card.bg-light.mb-4
+                    .card-body
+                      h5.card-subtitle.mb-3
+                        i.fas.fa-align-left.mr-2
+                        | Mô tả
+                      p.card-text #{ roles.description || "Chưa có mô tả" }
+
+                  .mt-4.text-end
+                    a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/roles/edit/${roles._id}`)
+                      i.fas.fa-edit.mr-2
+                      | Chỉnh sửa
+                    button.btn.btn-danger.btn-sm(data-id=roles._id, button-delete)
+                      i.fas.fa-trash.mr-2
+                      | Xóa
+        else
+          .alert.alert-warning
+            i.fas.fa-exclamation-triangle.mr-2
+            | Nhóm quyền không tồn tại hoặc đã bị xóa.
+
+  //- Form ẩn để xử lý xóa
+  form#form-delete-status(action="", method="POST", data-path=`${prefixAdmin}/roles/delete`, style="display: none")
+    input(type="hidden", name="_method", value="DELETE")
+    input.input-id(type="hidden", name="id")
+
+  script(src="/admin/js/product.js")

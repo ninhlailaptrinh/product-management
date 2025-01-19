@@ -1,12 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+}
+
 /* Header */
 .header {
   background: #1a1a1a;
-  padding: 12px 0;
-  z-index: 999;
+  position: fixed;
   top: 0;
-  position: sticky;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 999;
 }
 
 .header .inner-logo a {
@@ -51,33 +57,75 @@
 }
 
 /* Sider */
+.sider {
+  background: #252525;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  z-index: 998;
+}
+
 .sider .inner-menu ul {
-  list-style: none;
   padding: 0;
   margin: 0;
+  list-style: none;
+}
+
+.sider .inner-menu ul li {
+  margin: 5px 0;
 }
 
 .sider .inner-menu ul li a {
-  color: #ffffff;
-  display: block;
-  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  padding: 12px 25px;
   text-decoration: none;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-  border-radius: 4px;
-  margin: 5px 10px;
   font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
 }
 
 .sider .inner-menu ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-left: 3px solid #fff;
+  transform: translateX(5px);
 }
 
 .sider .inner-menu ul li a.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-left: 3px solid #fff;
+}
+
+/* Icon styles - thêm icon cho các menu item */
+.sider .inner-menu ul li a:before {
+  font-family: 'Font Awesome 5 Free';
+  margin-right: 10px;
+  font-weight: 900;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.sider .inner-menu ul li:nth-child(1) a:before {
+  content: '\f015'; /* Dashboard icon */
+}
+
+.sider .inner-menu ul li:nth-child(2) a:before {
+  content: '\f07b'; /* Category icon */
+}
+
+.sider .inner-menu ul li:nth-child(3) a:before {
+  content: '\f0b1'; /* Product icon */
+}
+
+.sider .inner-menu ul li:nth-child(4) a:before {
+  content: '\f507'; /* Roles icon */
 }
 
 /* Admin Section */
@@ -98,25 +146,10 @@
 
 /* Image Preview */
 .image-preview {
-  width: 150px;
-  height: auto;
-  margin-top: 15px;
+  max-width: 200px;
+  border-radius: 4px;
+  margin-top: 10px;
   border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.image-preview[src=""] {
-  display: none;
-}
-
-.image-preview:hover {
-  border-color: #007bff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Buttons */
@@ -202,7 +235,15 @@
 }
 
 .card-body {
-  padding: 20px;
+  padding: 15px;
+}
+
+.card-body .row {
+  margin-bottom: 15px;
+}
+
+.table-responsive {
+  margin-top: 15px;
 }
 
 /* Home Section */
@@ -306,4 +347,679 @@
 
 .btn-group .btn {
   margin-right: 5px;
+}
+
+.form-create-product {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-create-product .form-group {
+  margin-bottom: 20px;
+}
+
+.form-create-product label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-create-product .form-control {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.form-create-product .form-control:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.form-create-product .btn-primary {
+  background: #4e73df;
+  border: none;
+  padding: 10px 25px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-create-product .btn-primary:hover {
+  background: #2e59d9;
+}
+
+.form-create-product .form-check-inline {
+  margin-right: 15px;
+}
+
+.form-create-product .form-check-label {
+  font-weight: normal;
+}
+
+/* Có thể gộp các form styles này vì chúng rất giống nhau */
+.category-form,
+.category-edit-form,
+.product-edit-form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Các form-control cũng có style tương tự */
+.category-form .form-control,
+.category-edit-form .form-control,
+.product-edit-form .form-control {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s;
+}
+
+/* Form tạo danh mục */
+.category-form .card-header {
+  border-radius: 8px 8px 0 0;
+  padding: 1.2rem;
+}
+
+.category-form .card-header i {
+  margin-right: 8px;
+}
+
+.category-form .card-body {
+  padding: 2rem;
+}
+
+.category-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.category-form .form-label {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.category-form .form-label i {
+  margin-right: 8px;
+  color: #4a5568;
+}
+
+.category-form .form-control:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.category-form .form-control-file {
+  padding: 0.5rem 0;
+}
+
+.category-form .image-preview {
+  border: 2px dashed #e2e8f0;
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.category-form .image-preview:hover {
+  border-color: #4299e1;
+}
+
+.category-form .badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.category-form .btn-primary {
+  background: #4299e1;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+
+.category-form .btn-primary:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-form .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Form chỉnh sửa danh mục */
+.category-edit-form .card-header {
+  border-radius: 8px 8px 0 0;
+  padding: 1.2rem;
+}
+
+.category-edit-form .card-body {
+  padding: 2rem;
+}
+
+.category-edit-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.category-edit-form .form-label {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.category-edit-form .form-label i {
+  margin-right: 8px;
+  color: #4a5568;
+}
+
+.category-edit-form .form-control:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.category-edit-form .image-preview {
+  max-width: 200px;
+  border-radius: 6px;
+  border: 2px solid #e2e8f0;
+  padding: 4px;
+  margin-top: 10px;
+  transition: all 0.3s;
+}
+
+.category-edit-form .image-preview:hover {
+  border-color: #4299e1;
+  transform: scale(1.02);
+}
+
+.category-edit-form .btn-primary {
+  background: #4299e1;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+
+.category-edit-form .btn-primary:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+.category-edit-form .form-check-inline {
+  margin-right: 1rem;
+}
+
+.category-edit-form .form-check-input:checked {
+  background-color: #4299e1;
+  border-color: #4299e1;
+}
+
+.category-edit-form .badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+/* Sửa lỗi select box danh mục cha bị ẩn */
+.category-edit-form select.form-control,
+.category-form select.form-control {
+  height: auto !important;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Style cho options trong select */
+.category-edit-form select.form-control option,
+.category-form select.form-control option {
+  padding: 8px 12px;
+  white-space: pre-wrap;
+  min-height: 30px;
+  display: block;
+}
+
+/* Đảm bảo select box hiển thị trên các phần tử khác */
+.category-edit-form .form-group,
+.category-form .form-group {
+  position: relative;
+}
+
+/* Style cho dropdown khi mở */
+.category-edit-form select.form-control:focus,
+.category-form select.form-control:focus {
+  position: relative;
+  z-index: 2;
+}
+
+/* Tùy chỉnh thanh cuộn */
+.category-edit-form select.form-control::-webkit-scrollbar,
+.category-form select.form-control::-webkit-scrollbar {
+  width: 8px;
+}
+
+.category-edit-form select.form-control::-webkit-scrollbar-track,
+.category-form select.form-control::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.category-edit-form select.form-control::-webkit-scrollbar-thumb,
+.category-form select.form-control::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.category-edit-form select.form-control::-webkit-scrollbar-thumb:hover,
+.category-form select.form-control::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Chi tiết danh mục */
+.category-detail {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.category-detail .card-header {
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  color: white;
+  padding: 1.5rem;
+}
+
+.category-detail .card-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.category-detail .card-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.category-detail .img-fluid {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-detail .list-group-item {
+  padding: 1rem 1.5rem;
+  border-left: none;
+  border-right: none;
+}
+
+.category-detail .list-group-item strong {
+  display: inline-block;
+  min-width: 120px;
+  color: #4a5568;
+}
+
+.category-detail .badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.category-detail .btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.category-detail .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-detail .btn-warning {
+  background: #ed8936;
+  border: none;
+  color: white;
+}
+
+.category-detail .btn-danger {
+  background: #e53e3e;
+  border: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-detail .img-fluid {
+    max-height: 300px;
+    width: 100%;
+  }
+
+  .category-detail .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Chi tiết vai trò */
+.role-detail {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.role-detail .card-header {
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  color: white;
+  padding: 1.2rem;
+  border-radius: 8px 8px 0 0;
+}
+
+.role-detail .card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.role-detail .card-subtitle {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.role-detail .badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.role-detail .btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.role-detail .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.role-detail .btn-warning {
+  background: #ed8936;
+  border: none;
+  color: white;
+}
+
+.role-detail .btn-danger {
+  background: #e53e3e;
+  border: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .role-detail .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Form chỉnh sửa sản phẩm */
+.product-edit-form .card-header {
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  padding: 1.2rem;
+}
+
+.product-edit-form .form-label {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.product-edit-form .form-control:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.product-edit-form .image-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-edit-form .btn-group-toggle .btn {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.product-edit-form .btn-outline-success.active {
+  background: #48bb78;
+  border-color: #48bb78;
+  color: white;
+}
+
+.product-edit-form .btn-outline-secondary.active {
+  background: #718096;
+  border-color: #718096;
+  color: white;
+}
+
+.product-edit-form .btn-primary {
+  background: #4299e1;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.product-edit-form .btn-primary:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style cho select box danh mục */
+.product-edit-form select.form-control {
+  height: auto !important;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1000;
+  position: relative;
+}
+
+.product-edit-form select.form-control option {
+  padding: 8px 12px;
+  white-space: pre-wrap;
+  min-height: 30px;
+  display: block;
+}
+
+.product-edit-form select.form-control:focus {
+  position: relative;
+  z-index: 1050;
+}
+
+/* Tùy chỉnh thanh cuộn cho select */
+.product-edit-form select.form-control::-webkit-scrollbar {
+  width: 8px;
+}
+
+.product-edit-form select.form-control::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.product-edit-form select.form-control::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.product-edit-form select.form-control::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Đảm bảo select box hiển thị trên các phần tử khác */
+.product-edit-form .form-group {
+  position: relative;
+}
+
+/* Chi tiết sản phẩm */
+.product-detail {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail .card-header {
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  padding: 1.2rem;
+}
+
+.product-detail .card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.product-detail .card-subtitle {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.product-detail .list-group-item {
+  padding: 1rem;
+  border-color: #e2e8f0;
+}
+
+.product-detail .badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.product-detail .badge-success {
+  background: #48bb78;
+}
+
+.product-detail .badge-secondary {
+  background: #718096;
+}
+
+.product-detail .btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.product-detail .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-detail .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Scrollbar styles được lặp lại ở nhiều nơi */
+.category-edit-form select.form-control::-webkit-scrollbar,
+.category-form select.form-control::-webkit-scrollbar,
+.product-edit-form select.form-control::-webkit-scrollbar {
+  width: 8px;
+}
+
+.box-content {
+  background: #fff;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.box-content .btn-success {
+  float: right;
+  margin-left: 10px;
+}
+.box-content .table {
+  margin-top: 15px;
+  clear: both;
+}
+.box-content .action-box {
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+/* Action buttons container */
+.action-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.action-box .col-md-8,
+.action-box .col-md-4 {
+  padding: 0;
+}
+
+/* Table styles */
+.table {
+  margin-bottom: 0;
+}
+
+/* Form change multi */
+.form-change-multi {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Button groups */
+.btn-group {
+  display: flex;
+  gap: 5px;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+  .action-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-box .col-md-4 {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Main content */
+.main {
+  margin-left: 250px;
+  padding-top: 70px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sider {
+    width: 200px;
+  }
+  .main {
+    margin-left: 200px;
+  }
 }

@@ -5,54 +5,97 @@ include ../../mixins/select-tree.pug
 block main
   +alert-err(5000)
 
-  h1.mb-4 Thêm danh mục sản phẩm
+  .container
+    .row.justify-content-center
+      .col-12.col-lg-10
+        h1.mb-4.text-center
+          i.fas.fa-folder-plus.mr-2
+          | Thêm danh mục sản phẩm
 
-  .card.shadow-sm
-    .card-header.bg-primary.text-white
-      | Thông tin danh mục
-    .card-body
-      form(action=`${prefixAdmin}/product-category/create`, method="POST", enctype="multipart/form-data")
-        .form-group.mb-3
-          label.form-label(for="title") Tiêu đề
-          input#title.form-control(type="text", name="title", required)
+        .card.shadow-sm.category-form
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h5.mb-0
+              i.fas.fa-info-circle
+              | Thông tin danh mục
+            a.btn.btn-light.btn-sm(href=`${prefixAdmin}/product-category`)
+              i.fas.fa-arrow-left.mr-2
+              | Quay lại
 
-        .form-group.mb-3
-          label.form-label(for="parent_id") Danh mục cha
-          select#parent_id.form-control(name="parent_id")
-            option(value="") -- Chọn danh mục cha --
-            if (products)
-              +select-tree(products)
+          .card-body
+            form(action=`${prefixAdmin}/product-category/create`, method="POST", enctype="multipart/form-data")
+              .row
+                .col-md-8
+                  .form-group.mb-3
+                    label.form-label(for="title")
+                      i.fas.fa-heading
+                      | Tiêu đề
+                    input#title.form-control(
+                      type="text",
+                      name="title",
+                      required,
+                      placeholder="Nhập tiêu đề danh mục..."
+                    )
 
-        .form-group.mb-3
-          label.form-label(for="desc") Mô tả
-          textarea#desc.form-control.textarea-mce(name="description", rows="5")
+                  .form-group.mb-3
+                    label.form-label(for="parent_id")
+                      i.fas.fa-sitemap
+                      | Danh mục cha
+                    select#parent_id.form-control(name="parent_id")
+                      option(value="") -- Chọn danh mục cha --
+                      if (products)
+                        +select-tree(products)
 
-        .form-group.mb-3(upload-image)
-          label.form-label(for="thumbnail") Ảnh
-          input#thumbnail.form-control-file(type="file", name="thumbnail", accept="image/*", upload-image-input)
-          img.image-preview.mt-2(
-            src="",
-            upload-image-preview,
-            style="max-width: 200px; border-radius: 5px; display: none"
-          )
+                  .form-group.mb-3
+                    label.form-label(for="desc")
+                      i.fas.fa-align-left
+                      | Mô tả
+                    textarea#desc.form-control.textarea-mce(
+                      name="description",
+                      rows="5",
+                      placeholder="Nhập mô tả danh mục..."
+                    )
 
-        .form-group.mb-3
-          label.form-label(for="position") Vị trí
-          input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
+                .col-md-4
+                  .form-group.mb-3(upload-image)
+                    label.form-label(for="thumbnail")
+                      i.fas.fa-image
+                      | Ảnh đại diện
+                    input#thumbnail.form-control-file(
+                      type="file",
+                      name="thumbnail",
+                      accept="image/*",
+                      upload-image-input
+                    )
+                    img.image-preview.mt-2(
+                      src="",
+                      upload-image-preview,
+                      style="max-width: 200px; border-radius: 5px; display: none"
+                    )
 
-        .form-group.mb-3
-          label.form-label Trạng thái
-          .d-flex.align-items-center
-            .form-check.form-check-inline.me-4
-              input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
-              label.form-check-label(for="statusActive") 
-                span.badge.bg-success Hoạt động
-            .form-check.form-check-inline
-              input#statusInactive.form-check-input(type="radio", name="status", value="inactive")
-              label.form-check-label(for="statusInactive") 
-                span.badge.bg-danger Dừng hoạt động
+                  .form-group.mb-3
+                    label.form-label(for="position")
+                      i.fas.fa-sort-numeric-down
+                      | Vị trí
+                    input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
 
-        .form-group.mb-3
-          button.btn.btn-primary(type="submit") Thêm danh mục
+                  .form-group.mb-3
+                    label.form-label
+                      i.fas.fa-toggle-on
+                      | Trạng thái
+                    .d-flex.align-items-center
+                      .form-check.form-check-inline.me-4
+                        input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
+                        label.form-check-label(for="statusActive")
+                          span.badge.bg-success Hoạt động
+
+                      .form-check.form-check-inline
+                        input#statusInactive.form-check-input(type="radio", name="status", value="inactive")
+                        label.form-check-label(for="statusInactive")
+                          span.badge.bg-danger Dừng hoạt động
+
+              .form-group.mb-0.text-center
+                button.btn.btn-primary(type="submit")
+                  i.fas.fa-save.mr-2
+                  | Thêm danh mục
 
   script(src="/admin/js/product.js")
