@@ -21,12 +21,13 @@ module.exports.index = async (req, res) => {
   }
 
   const products = await ProductCategory.find(find);
+
   const newProducts = createTree(products);
 
   res.render('admin/pages/product-category/index', {
     pageTitle: 'Danh mục sản phẩm',
     products: newProducts,
-    filterStatus: filterStatus, // Trạng thái lọc
+    filterStatus: filterStatus,
     keyword: objectSearch.keyword,
     message: req.flash('success'),
     messages: req.flash('error'),
@@ -55,6 +56,11 @@ module.exports.create = async (req, res) => {
 // Xử lý tạo sản phẩm
 module.exports.createPost = async (req, res) => {
   try {
+    // Đảm bảo status luôn có giá trị hợp lệ
+    if (!['active', 'inactive'].includes(req.body.status)) {
+      req.body.status = 'active'; // Mặc định là active
+    }
+
     if (!req.body.position || req.body.position === '') {
       const countCategories = await ProductCategory.countDocuments();
       req.body.position = countCategories + 1;

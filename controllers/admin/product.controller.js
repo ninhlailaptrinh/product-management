@@ -41,27 +41,45 @@ module.exports.index = async (req, res) => {
     countProducts,
   );
 
+  // Xử lý sắp xếp
   let sort = {};
+  const sortKey = req.query.sortKey || 'position-asc'; // Giá trị mặc định
 
-  if (req.query.sortKey && req.query.sortValue) {
-    sort[req.query.sortKey] = 'desc';
-  } else {
-    sort.position = 'desc';
+  // Tách sortKey thành field và kiểu sắp xếp
+  if (sortKey) {
+    const [field, type] = sortKey.split('-');
+
+    // Đảm bảo sắp xếp số học cho trường price
+    if (field === 'price') {
+      sort[field] = type === 'asc' ? 1 : -1;
+      // Thêm điều kiện chuyển đổi price thành số
+      find.price = { $type: 'number' };
+    }
+    // Sắp xếp text cho title
+    else if (field === 'title') {
+      sort[field] = type === 'asc' ? 1 : -1;
+    }
+    // Sắp xếp số học cho position
+    else if (field === 'position') {
+      sort[field] = type === 'asc' ? 1 : -1;
+    }
   }
 
   // Lấy danh sách sản phẩm với điều kiện tìm kiếm và phân trang
   const products = await Product.find(find)
-    .sort({ price: 'desc' }) // Sắp xếp theo thứ tự tăng dần
-    .skip(objectPagination.skip) // Bỏ qua các sản phẩm trước đó
-    .limit(objectPagination.limitItem); // Giới hạn số sản phẩm trên mỗi trang
+    .collation({ locale: 'vi', numericOrdering: true }) // Thêm collation để sắp xếp đúng
+    .sort(sort)
+    .skip(objectPagination.skip)
+    .limit(objectPagination.limitItem);
 
   // Render trang và truyền dữ liệu
   res.render('admin/pages/products/index', {
-    pageTitle: 'Danh sách sản phẩm', // Tiêu đề trang
-    products: products, // Danh sách sản phẩm
-    filterStatus: filterStatus, // Trạng thái lọc
-    keyword: objectSearch.keyword, // Từ khóa tìm kiếm
-    pagination: objectPagination, // Thông tin phân trang
+    pageTitle: 'Danh sách sản phẩm',
+    products: products,
+    filterStatus: filterStatus,
+    keyword: objectSearch.keyword,
+    pagination: objectPagination,
+    sortKey: sortKey, // Truyền sortKey để hiển thị active trong select
     message: req.flash('success'),
     messages: req.flash('error'),
   });

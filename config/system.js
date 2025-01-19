@@ -1,4 +1,4 @@
-const PATH_ADMIN = "/admin";
+const PATH_ADMIN = '/admin';
 
 module.exports = {
   prefixAdmin: PATH_ADMIN,

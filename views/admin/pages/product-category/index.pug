@@ -21,7 +21,12 @@ block main
     .card-body
       .row
         .col-md-6.mb-3
-          +filter-status(filterStatus)
+          .btn-group
+            each item in filterStatus
+              a.btn(href=`${prefixAdmin}/product-category?status=${item.status}`, class=`btn-outline-primary ${item.class}`)
+                span #{ item.name }
+                if item.status
+                  span.badge.bg-secondary.ms-1 #{ item.count }
         .col-md-6.mb-3
           +search(keyword)
 

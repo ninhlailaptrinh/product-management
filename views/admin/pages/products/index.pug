@@ -106,8 +106,8 @@ block main
     input#input-id(type="hidden", name="id")
 
   form#form-delete-status(action="", method="POST", data-path=`${prefixAdmin}/products/delete`, style="display: none")
-    input#input-status(type="hidden", name="status")
-    input#input-id(type="hidden", name="id")
+    input.input-status(type="hidden", name="status")
+    input.input-id(type="hidden", name="id")
 
   //- Script xử lý sản phẩm
   script(src="/admin/js/product.js")

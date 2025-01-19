@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-ok(5000)
+
+  h1.mb-4 Nhóm quyền
+
+  //- Danh sách nhóm quyền
+  .card.mb-4.shadow-sm
+    .card-header.bg-gradient-primary.text-white.d-flex.justify-content-between.align-items-center
+      span Danh sách nhóm quyền
+      a.btn.btn-light.btn-sm(href=`${prefixAdmin}/roles/create`)
+        i.fas.fa-plus.mr-2
+        | Thêm nhóm quyền
+
+    .card-body
+      .table-responsive
+        table.table.table-hover.table-sm
+          thead
+            tr
+              th STT
+              th Nhóm quyền
+              th Mô tả ngắn
+              th.text-right Hành động
+
+          tbody
+            if (roles.length > 0)
+              each item, index in roles
+                tr
+                  td #{ index + 1 }
+                  td #{ item.title }
+                  td #{ item.description }
+                  td.text-right
+                    .btn-group
+                      a.btn.btn-info.btn-sm.mr-1(href=`${prefixAdmin}/roles/detail/${item._id}`, title="Chi tiết")
+                        i.fas.fa-eye
+                      a.btn.btn-warning.btn-sm.mr-1(href=`${prefixAdmin}/roles/edit/${item._id}`, title="Sửa")
+                        i.fas.fa-edit
+                      button.btn.btn-danger.btn-sm(button-delete, data-id=item._id, title="Xóa")
+                        i.fas.fa-trash
+            else
+              tr
+                td.text-center(colspan="4") Chưa có nhóm quyền nào được tạo.

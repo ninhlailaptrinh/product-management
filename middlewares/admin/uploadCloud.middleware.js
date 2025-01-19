@@ -31,6 +31,10 @@ const uploadImage = async (req, res, next) => {
       const result = await streamUpload(req);
       console.log("Upload result:", result);
 
+      if (!result || !result.secure_url) {
+        return res.status(500).json({ error: "Upload failed" });
+      }
+
       // Lưu URL ảnh vào req.body
       req.body.thumbnail = result.secure_url;
 

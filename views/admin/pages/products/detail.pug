@@ -45,5 +45,7 @@ block main
 
   //- Form ẩn để xử lý xóa
   form#form-delete-status(method="POST", action="", data-path="/admin/products/delete", style="display: none")
+    input.input-status(type="hidden", name="status")
+    input.input-id(type="hidden", name="id")
 
   script(src="/admin/js/product.js")

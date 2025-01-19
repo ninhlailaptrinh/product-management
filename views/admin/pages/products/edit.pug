@@ -19,12 +19,12 @@ block main
         label(for="title") Tiêu đề
         input#title.form-control(type="text", name="title", required, value=product.title)
       //- Chon danh muc 
-    .form-group.mb-3
-      label.form-label(for="product_category_id") Danh mục
-      select#product_category_id.form-control(name="product_category_id")
-        option(value="") -- Chọn danh mục --
-        if (category)
-          +select-tree(category, 1 , product.product_category_id)
+      .form-group.mb-3
+        label.form-label(for="product_category_id") Danh mục
+        select#product_category_id.form-control(name="product_category_id")
+          option(value="") -- Chọn danh mục --
+          if (category)
+            +select-tree(category, 1 , product.product_category_id)
       //- Mô tả
       .form-group
         label(for="desc") Mô tả

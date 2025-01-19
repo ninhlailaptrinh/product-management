@@ -45,11 +45,21 @@ block main
       input#position.form-control(type="number", name="position", placeholder="Tự động tăng", min="1")
 
     .form-group.form-check.form-check-inline
-      input#statusActive.form-check-input(type="radio", name="status", value="active", checked)
-      label.form-check-label(for="isHot") Hoạt động
+      input#statusActive.form-check-input(
+        type="radio",
+        name="status",
+        value="active",
+        checked=product && product.status == "active"
+      )
+      label.form-check-label(for="statusActive") Hoạt động
     .form-group.form-check.form-check-inline
-      input#statusActive.form-check-input(type="radio", name="status", value="inactive", checked)
-      label.form-check-label(for="isHot") Dừng hoạt động
+      input#statusInactive.form-check-input(
+        type="radio",
+        name="status",
+        value="inactive",
+        checked=product && product.status == "inactive"
+      )
+      label.form-check-label(for="statusInactive") Dừng hoạt động
 
     .form-group
       button.btn.btn-primary(type="submit") Thêm sản phẩm
