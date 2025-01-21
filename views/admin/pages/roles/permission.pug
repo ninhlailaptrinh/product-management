@@ -1,0 +1,162 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-ok(5000)
+
+    .d-flex.justify-content-between.mb-4
+      h1 Phân quyền
+
+  if (roles.length > 0)
+    div(data-roles=roles)
+    .card.mb-4.shadow-sm
+      .card-header.bg-gradient-primary.text-white.d-flex.justify-content-between.align-items-center
+        span Danh sách quyền
+        button.btn.btn-light.btn-sm(type="submit", button-submit)
+          i.fas.fa-save.mr-2
+          | Lưu thay đổi
+
+      .card-body
+        .table-responsive
+          table#table-permission.table.table-hover.table-sm.table-bordered
+            thead.thead-light
+              tr
+                th.align-middle(width="50%") Tính năng
+                each role in roles
+                  th.text-center.align-middle(width="25%") #{ role.title }
+            tbody
+              tr.d-none(data-name="id")
+                td
+                each role in roles
+                  td.text-center
+                    input.form-check-input.position-relative.m-0(type="hidden", value=role.id)
+              //- product-category
+              tr.table-primary
+                td(colspan=roles.length + 1)
+                  b.text-dark
+                    i.fas.fa-folder.mr-2
+                    | Danh mục sản phẩm
+
+              tr(data-name="product-category_view")
+                td.border-right
+                  i.fas.fa-eye.mr-2.text-info
+                  | Xem
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product-category_create")
+                td.border-right
+                  i.fas.fa-plus.mr-2.text-success
+                  | Thêm mới
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product-category_edit")
+                td.border-right
+                  i.fas.fa-edit.mr-2.text-warning
+                  | Chỉnh sửa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product-category_delete")
+                td.border-right
+                  i.fas.fa-trash.mr-2.text-danger
+                  | Xóa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+              //-Product
+              tr.table-primary
+                td(colspan=roles.length + 1)
+                  b.text-dark
+                    i.fas.fa-folder.mr-2
+                    | Sản phẩm
+
+              tr(data-name="product_view")
+                td.border-right
+                  i.fas.fa-eye.mr-2.text-info
+                  | Xem
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product_create")
+                td.border-right
+                  i.fas.fa-plus.mr-2.text-success
+                  | Thêm mới
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product_edit")
+                td.border-right
+                  i.fas.fa-edit.mr-2.text-warning
+                  | Chỉnh sửa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="product_delete")
+                td.border-right
+                  i.fas.fa-trash.mr-2.text-danger
+                  | Xóa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+              //- Nhom quyen
+              tr.table-primary
+                td(colspan=roles.length + 1)
+                  b.text-dark
+                    i.fas.fa-folder.mr-2
+                    | Nhóm quyền
+
+              tr(data-name="roles_view")
+                td.border-right
+                  i.fas.fa-eye.mr-2.text-info
+                  | Xem
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="roles_create")
+                td.border-right
+                  i.fas.fa-plus.mr-2.text-success
+                  | Thêm mới
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="roles_edit")
+                td.border-right
+                  i.fas.fa-edit.mr-2.text-warning
+                  | Chỉnh sửa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="roles_delete")
+                td.border-right
+                  i.fas.fa-trash.mr-2.text-danger
+                  | Xóa
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+              tr(data-name="roles_promission")
+                td.border-right
+                  i.fas.fa-user-shield.mr-2.text-danger
+                  | Phân quyền
+                each role in roles
+                  td.text-center.border-right
+                    input.form-check-input.position-relative.m-0(type="checkbox")
+
+
+          form.form-change-permission(method="POST", action=`${prefixAdmin}/roles/permission?_method=PATCH`)
+            .form-group
+              input.form-control.d-none(name="permission")
+
+
+  script(src="/admin/js/roles.js")

@@ -128,6 +128,10 @@ body {
   content: '\f507'; /* Roles icon */
 }
 
+.sider .inner-menu ul li:nth-child(5) a:before {
+  content: '\f502'; /* fa-user-shield icon */
+}
+
 /* Admin Section */
 .sider .admin-section {
   padding-left: 20px;

@@ -189,6 +189,8 @@ module.exports.edit = async (req, res) => {
     res.render('admin/pages/product-category/edit', {
       pageTitle: 'Sửa sản phẩm',
       product: product,
+      message: req.flash('success'),
+      messages: req.flash('error'),
     });
   } catch (error) {
     console.error(error);

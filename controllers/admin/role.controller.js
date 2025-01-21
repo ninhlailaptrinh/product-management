@@ -1,5 +1,6 @@
 const Role = require('../../models/role.model');
 const systemConfig = require('../../config/system');
+const { json } = require('body-parser');
 
 module.exports.index = async (req, res) => {
   const roles = await Role.find({
@@ -83,7 +84,6 @@ module.exports.detail = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log('Deleting role with ID:', id);
 
     await Role.updateOne(
       { _id: id },
@@ -100,4 +100,25 @@ module.exports.deleteItem = async (req, res) => {
     req.flash('error', 'Xóa nhóm quyền thất bại!');
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
   }
+};
+// permission
+module.exports.permission = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+  const roles = await Role.find(find);
+
+  res.render('admin/pages/roles/permission', {
+    pageTitle: 'Phân quyền',
+    roles: roles,
+  });
+};
+
+module.exports.permissionPatch = async (req, res) => {
+  const permission = JSON.parse(req.body.permission);
+  for (const item of permission) {
+    await Role.updateOne({ _id: item.id }, { permissions: item.permission });
+  }
+  req.flash('Cập nhập phân quyền thành công!');
+  res.redirect(`${systemConfig.prefixAdmin}/roles/permission`);
 };

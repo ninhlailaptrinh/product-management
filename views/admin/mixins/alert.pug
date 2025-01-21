@@ -1,8 +1,6 @@
 mixin alert-ok(time)
   if message && message.length > 0
     .alert.alert-success(show-alert, data-time=time, close-alert) #{ message }
-  if messages.error && messages.error.length > 0
-    .alert.alert-danger(show-alert, data-time=time) #{ messages.error }
 
 mixin alert-err(time)
   if messages && messages.error
